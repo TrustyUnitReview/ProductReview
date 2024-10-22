@@ -13,7 +13,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     #Checks that the build job was successful and the branch is master
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master'
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'cicd-setup'
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
