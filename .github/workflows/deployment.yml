@@ -6,7 +6,8 @@ name: Deploy JAR app to Azure Web App - ProductReview
 on:
   push:
     branches:
-      - master
+      - cicd-setup #just for testing
+      #- ${{ github.event.repository.default_branch }}
   workflow_dispatch:
 
 jobs:
