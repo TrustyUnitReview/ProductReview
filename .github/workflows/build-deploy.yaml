@@ -31,8 +31,8 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: build # Ensures that deployment runs after build is completed
-    if: github.ref == 'refs/heads/master' # Ensures deployment only runs on push to master
+    needs: build #Ensures that deployment runs after build is completed
+    if: github.ref == 'refs/heads/master' #Ensures deployment only runs on push to master
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
