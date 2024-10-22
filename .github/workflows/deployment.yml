@@ -5,15 +5,18 @@ name: Deploy JAR app to Azure Web App - ProductReview
 
 on:
   workflow_run:
-    workflows: ["Build and Test JAR app - ProductReview"] #Only run this workflow when the build job is successful
+    workflows: [ "Build and Test JAR app - ProductReview" ] # Only run this workflow when the build job is successful
     types:
       - completed
+#  push:
+#    branches:
+#      - #master
+#  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: windows-latest
-    #Checks that the build job was successful and the branch is master
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'cicd-setup'
+    if: github.event.workflow_run.conclusion == 'success' #todo: remove
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
