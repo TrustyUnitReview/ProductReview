@@ -1,4 +1,4 @@
-name: Build, Test, and Deploy to Azure Web App - ProductReview
+name: Build, Test, and Deploy to Azure Web App - Product Review
 
 on:
   push:
