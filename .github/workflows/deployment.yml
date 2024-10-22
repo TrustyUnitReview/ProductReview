@@ -4,15 +4,16 @@
 name: Deploy JAR app to Azure Web App - ProductReview
 
 on:
-  push:
-    branches:
-      - cicd-setup #just for testing
-      #- master
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Build and Test JAR app - ProductReview"] #Only run this workflow when the build job is successful
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: windows-latest
+    #Checks that the build job was successful and the branch is master
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master'
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
