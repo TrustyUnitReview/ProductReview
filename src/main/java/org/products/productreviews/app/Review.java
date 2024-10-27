@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Review {
 
-    private long reviewID;
+    private int reviewID;
     private String body;
     private User user;
 
