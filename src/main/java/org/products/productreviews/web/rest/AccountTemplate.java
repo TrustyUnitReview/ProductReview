@@ -14,7 +14,8 @@ public class AccountTemplate {
     public String viewAccount(@PathVariable long id, Model model){
         //get user from repo -> User user = userRepo.findById(id)
         model.addAttribute("user", "");
-        return "userAccount";
+        // if the current user is authenticated, show this template -> SecurityContextHolder maybe
+        return "userSelfAccount";
+        //TODO: if the current user is NOT authenticated, show different template
     }
-
 }

@@ -2,7 +2,7 @@ package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.Review;
-import org.products.productreviews.web.patcher.ReviewPatcher;
+import org.products.productreviews.web.patcher.Patcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class ReviewAPI {
         Review existingReview = null;
         try{
             // Patch
-            ReviewPatcher.reviewPatch(existingReview, incompleteReview);
+            Patcher.patch(existingReview, incompleteReview, Review.class);
             // Save
             // ReviewRepo.save(existingIntern);
         } catch (Exception e) {

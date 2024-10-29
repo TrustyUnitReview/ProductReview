@@ -1,20 +1,18 @@
 package org.products.productreviews.web.patcher;
 
-import org.products.productreviews.app.Review;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
 @Component
-public class ReviewPatcher {
+public class Patcher {
 
-    public static void reviewPatch(Review existing, Review incomplete) throws IllegalAccessException {
+    public static void patch(Object existing, Object incomplete, Class<?> updatingClass) throws IllegalAccessException {
 
         // Gain direct access to class fields and edit them. Use "incomplete" to edit existing.
-        Class<?> reviewClass = Review.class;
-        Field[] reviewFields = reviewClass.getDeclaredFields();
+        Field[] classFields = updatingClass.getDeclaredFields();
 
-        for (Field field : reviewFields) {
+        for (Field field : classFields) {
             field.setAccessible(true);
             Object value = field.get(incomplete);
             if (value != null) {
