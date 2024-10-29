@@ -16,16 +16,33 @@ public class AccountAPI {
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> editAccount(@PathVariable long id, @RequestBody User partialUser) {
-        //find user from userRepo by id and ensure user matches with authenticated user
-        // if not, reject the patch request
         User currentUser = null;
-        try {
-            Patcher.patch(currentUser, partialUser, User.class); //this approach is simple, but maybe DTO pattern
-            //save to repo
-        } catch (IllegalAccessException e) {
-            ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
-            return ResponseEntity.badRequest().build();
+        //find user from userRepo by id and ensure user matches with authenticated user
+        // if user does not match, don't patch
+        if (currentUser != null) {
+            try {
+                Patcher.patch(currentUser, partialUser, User.class); //this approach is simple, but maybe DTO pattern
+                //save to repo
+            } catch (IllegalAccessException e) {
+                ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAccount(@PathVariable long id) {
+
+        // find user by id
+        User user = null;
+        //authenticate  current user with found user
+        // if user does not match, don't delete
+        if (user != null) {
+            //userRepo.deleteById(id)
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

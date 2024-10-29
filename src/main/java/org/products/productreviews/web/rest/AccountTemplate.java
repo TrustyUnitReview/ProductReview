@@ -29,6 +29,6 @@ public class AccountTemplate {
     @GetMapping("/login")
     public String userLogin(Model model, User user) {
         model.addAttribute("user", user);
-        return "userRegistration";
+        return "userLogin";
     }
 }
