@@ -20,7 +20,7 @@ public class AccountAPI {
         // if not, reject the patch request
         User currentUser = null;
         try {
-            Patcher.patch(currentUser, partialUser, User.class); //this approach is simpler, but maybe DTO pattern
+            Patcher.patch(currentUser, partialUser, User.class); //this approach is simple, but maybe DTO pattern
             //save to repo
         } catch (IllegalAccessException e) {
             ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));

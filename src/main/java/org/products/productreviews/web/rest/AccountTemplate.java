@@ -1,5 +1,6 @@
 package org.products.productreviews.web.rest;
 
+import org.products.productreviews.app.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,5 +18,17 @@ public class AccountTemplate {
         // if the current user is authenticated, show this template -> SecurityContextHolder maybe
         return "userSelfAccount";
         //TODO: if the current user is NOT authenticated, show different template
+    }
+
+    @GetMapping("/reg")
+    public String userRegistration(Model model) {
+        model.addAttribute("newUser", new User());
+        return "userRegistration";
+    }
+
+    @GetMapping("/login")
+    public String userLogin(Model model, User user) {
+        model.addAttribute("user", user);
+        return "userRegistration";
     }
 }
