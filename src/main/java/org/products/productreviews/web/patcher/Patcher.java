@@ -7,10 +7,10 @@ import java.lang.reflect.Field;
 @Component
 public class Patcher {
 
-    public static void patch(Object existing, Object incomplete, Class<?> updatingClass) throws IllegalAccessException {
-
+    public static void patch(Object existing, Object incomplete) throws IllegalAccessException {
         // Gain direct access to class fields and edit them. Use "incomplete" to edit existing.
-        Field[] classFields = updatingClass.getDeclaredFields();
+        Class<?> c = existing.getClass();
+        Field[] classFields = c.getDeclaredFields();
 
         for (Field field : classFields) {
             field.setAccessible(true);
@@ -20,7 +20,5 @@ public class Patcher {
             }
             field.setAccessible(false);
         }
-
     }
-
 }

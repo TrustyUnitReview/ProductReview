@@ -30,7 +30,7 @@ public class ReviewAPI {
         Review existingReview = null;
         try{
             // Patch
-            Patcher.patch(existingReview, incompleteReview, Review.class);
+            Patcher.patch(existingReview, incompleteReview);
             // Save
             // ReviewRepo.save(existingIntern);
         } catch (Exception e) {
