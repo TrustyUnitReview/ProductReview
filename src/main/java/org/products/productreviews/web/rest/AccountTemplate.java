@@ -1,9 +1,11 @@
 package org.products.productreviews.web.rest;
 
 import org.products.productreviews.app.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
@@ -30,5 +32,14 @@ public class AccountTemplate {
     public String userLogin(Model model, User user) {
         model.addAttribute("user", user);
         return "userLogin";
+    }
+
+    @PostMapping("/reg")
+    public String registerAccount(Model model, User user) {
+        //encrypt user password
+        //userRepo.save(user)
+        model.addAttribute("user", user);
+        //TODO: make a home endpoint and page
+        return "redirect:/";
     }
 }
