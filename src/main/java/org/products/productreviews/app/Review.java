@@ -1,18 +1,21 @@
 package org.products.productreviews.app;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Review {
+public class Review implements Serializable {
 
     private int reviewID;
     private String body;
     private User user;
+    private Star rating;
 
     protected Review() {}
 
-    public Review(User owner, String reviewBody){
+    public Review(User owner, String reviewBody, Star rating){
         this.user = owner;
         this.body = reviewBody;
+        this.rating = rating;
     }
 
     public User getOwner() {
@@ -22,6 +25,16 @@ public class Review {
     public String getBody() {
         return body;
     }
+
+    public Star getRating() {return rating;}
+
+    public int getReviewID() {return reviewID;}
+
+    public void setReviewID(int reviewID) {this.reviewID = reviewID;}
+
+    public void setBody(String body) {this.body = body;}
+
+    public void setRating(Star rating) {this.rating = rating;}
 
     /**
      * Indicates whether some other object is "equal to" this one.
@@ -110,6 +123,38 @@ public class Review {
      */
     @Override
     public String toString() {
-        return "Review [reviewID=" + reviewID + ", body=" + body + ", user=" + user + "]";
+        return "Review [reviewID=" + reviewID + "rating=" + rating.toString() + ", body=" + body + ", rating=" + rating + "]";
+    }
+
+
+
+    public enum Star implements Serializable {
+        ONE(1), ONE_HALF(1.5f),
+        TWO(2), TWO_HALF(2.5f),
+        TREE(3), TREE_HALF(3.5f),
+        FOUR(4), FOUR_HALF(4.5f),
+        FIVE(5);
+
+        final float value;
+
+        Star(float value){
+            this.value = value;
+        }
+
+        public float getValue() {return value;}
+
+
+        /**
+         * Returns the name of this enum constant, as contained in the
+         * declaration.  This method may be overridden, though it typically
+         * isn't necessary or desirable.  An enum class should override this
+         * method when a more "programmer-friendly" string form exists.
+         *
+         * @return the name of this enum constant
+         */
+        @Override
+        public String toString() {
+            return "Star [value=" + value + "]";
+        }
     }
 }
