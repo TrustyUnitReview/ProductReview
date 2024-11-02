@@ -23,7 +23,7 @@ public class User {
     // TODO: Can we change to Set to ensure the reviews aren't duplicated?
     @OneToMany
     @JoinColumn(name="user_username")
-    private ArrayList<Review> reviews;
+    private Set<Review> reviews;
     private UserRole role = UserRole.DEFAULT;
 
     /**
@@ -36,7 +36,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.follows = new HashSet<>();
-        this.reviews = new ArrayList<>();
+        this.reviews = new HashSet<>();
     }
 
     // For JPA reflection, should never be called in theory.
@@ -81,7 +81,7 @@ public class User {
         return new User(username, password);
     }
 
-    public ArrayList<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
