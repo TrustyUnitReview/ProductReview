@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class User {
 
+    //@Id
+    //private Long id;
     private String userName;
     private String password;
-    private UserRole role;
+    private UserRole role = UserRole.DEFAULT;
 
     private ArrayList<Review> reviews;
 
