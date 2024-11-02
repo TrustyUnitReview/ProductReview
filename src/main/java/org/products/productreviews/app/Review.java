@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Review implements Serializable {
 
-    private int reviewID;
+    private long reviewID;
     private String body;
     private User user;
     private Star rating;
@@ -28,9 +28,9 @@ public class Review implements Serializable {
 
     public Star getRating() {return rating;}
 
-    public int getReviewID() {return reviewID;}
+    public long getReviewID() {return reviewID;}
 
-    public void setReviewID(int reviewID) {this.reviewID = reviewID;}
+    public void setReviewID(long reviewID) {this.reviewID = reviewID;}
 
     public void setBody(String body) {this.body = body;}
 
@@ -131,7 +131,7 @@ public class Review implements Serializable {
     public enum Star implements Serializable {
         ONE(1), ONE_HALF(1.5f),
         TWO(2), TWO_HALF(2.5f),
-        TREE(3), TREE_HALF(3.5f),
+        TREE(3), THREE_HALF(3.5f),
         FOUR(4), FOUR_HALF(4.5f),
         FIVE(5);
 
