@@ -1,7 +1,7 @@
 package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
-import org.products.productreviews.app.Entities.User;
+import org.products.productreviews.app.entities.User;
 import org.products.productreviews.web.patcher.Patcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

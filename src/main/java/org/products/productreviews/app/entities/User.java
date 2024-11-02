@@ -1,8 +1,8 @@
-package org.products.productreviews.app.Entities;
+package org.products.productreviews.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
-import org.products.productreviews.app.Repositories.UserRepository;
+import org.products.productreviews.app.repositories.UserRepository;
 
 import javax.management.openmbean.InvalidKeyException;
 import java.util.HashSet;
@@ -54,7 +54,7 @@ public class User {
      * Input sanitation for user creation.
      * Factory should be main (exclusive?) way to create users.
      *
-     * @param repo The user repository, instanciated through DI.
+     * @param repo The user repository, instantiated through DI.
      * @param username A string username, should be (input sanitation rules here)
      * @param password A string password to match against for authentication.
      *
