@@ -1,7 +1,7 @@
 package org.products.productreviews.web.rest;
 
-import org.products.productreviews.app.Entities.User;
-import org.products.productreviews.app.Repositories.UserRepository;
+import org.products.productreviews.app.entities.User;
+import org.products.productreviews.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

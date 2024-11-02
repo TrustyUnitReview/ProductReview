@@ -1,12 +1,11 @@
-package org.products.productreviews.app.Entities;
+package org.products.productreviews.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
-import org.products.productreviews.app.Repositories.UserRepository;
+import org.products.productreviews.app.repositories.UserRepository;
 import org.products.productreviews.app.UserRole;
 
 import javax.management.openmbean.InvalidKeyException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +19,6 @@ public class User {
 
     @ManyToMany
     private Set<User> follows;
-    // TODO: Can we change to Set to ensure the reviews aren't duplicated?
     @OneToMany
     @JoinColumn(name="user_username")
     private Set<Review> reviews;

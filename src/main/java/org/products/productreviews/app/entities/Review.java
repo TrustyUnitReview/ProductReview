@@ -1,4 +1,4 @@
-package org.products.productreviews.app.Entities;
+package org.products.productreviews.app.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
