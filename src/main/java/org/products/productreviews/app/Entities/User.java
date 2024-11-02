@@ -1,12 +1,14 @@
 package org.products.productreviews.app.Entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.products.productreviews.app.Repositories.UserRepository;
 import org.products.productreviews.app.UserRole;
 
 import javax.management.openmbean.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -15,10 +17,13 @@ public class User {
     private String username;
     // TODO: Replace this unsafe string store with a true authentication method
     private String password;
-//    // TODO: JPA Annotations
-//    private Set<User> follows;
-//    // TODO: JPA Annotations, can we change to Set to ensure uniqueness?
-//    private ArrayList<Review> reviews;
+
+    @ManyToMany
+    private Set<User> follows;
+    // TODO: Can we change to Set to ensure the reviews aren't duplicated?
+    @OneToMany
+    @JoinColumn(name="user_username")
+    private ArrayList<Review> reviews;
     private UserRole role = UserRole.DEFAULT;
 
     /**
@@ -30,8 +35,8 @@ public class User {
     private User(String username, String password) {
         this.username = username;
         this.password = password;
-//        this.follows = new HashSet<>();
-//        this.reviews = new ArrayList<>();
+        this.follows = new HashSet<>();
+        this.reviews = new ArrayList<>();
     }
 
     // For JPA reflection, should never be called in theory.
@@ -53,7 +58,7 @@ public class User {
      * Input sanitation for user creation.
      * Factory should be main (exclusive?) way to create users.
      *
-     * @param repo The user repository, instanciated through DI.
+     * @param repo The user repository, instantiated through DI.
      * @param username A string username, should be (input sanitation rules here)
      * @param password A string password to match against for authentication.
      *
@@ -76,10 +81,9 @@ public class User {
         return new User(username, password);
     }
 
-//    public ArrayList<Review> getReviews() {
-//        return reviews;
-//    }
-
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
 
     public void setUserName(String userName) {
         this.username = userName;

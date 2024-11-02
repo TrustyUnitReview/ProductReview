@@ -1,12 +1,21 @@
 package org.products.productreviews.app.Entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
+@Entity
 public class Review implements Serializable {
 
+    @Id
     private long reviewID;
     private String body;
+    @ManyToOne
+    @JoinColumn(name = "user_username")
     private User user;
     private Star rating;
 

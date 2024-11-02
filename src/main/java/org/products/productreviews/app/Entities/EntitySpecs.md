@@ -18,7 +18,8 @@ They need to be able to log in, using a username and a password.
 - (PK) Username: Uniquely identify user.
 - Password: Used to authenticate user. Hashed (or see how authentication method wants us to store it)
 
-- Follows: One-to-Many Users association. Can have 0.
+- Follows: Many-to-Many Users association. Can have 0 follows, followers.
+    No need to know followers, not sure if it's actually supposed to be one-to-many in that case? Don't think so.
 - Reviews: One-to-Many Reviews association. Can have 0.
 
 ## Reviews
