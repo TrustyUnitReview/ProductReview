@@ -1,7 +1,7 @@
 package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
-import org.products.productreviews.app.Review;
+import org.products.productreviews.app.Entities.Review;
 import org.products.productreviews.web.patcher.Patcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

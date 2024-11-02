@@ -1,4 +1,4 @@
-package org.products.productreviews.app;
+package org.products.productreviews.app.Entities;
 
 import java.io.Serializable;
 import java.util.HashMap;

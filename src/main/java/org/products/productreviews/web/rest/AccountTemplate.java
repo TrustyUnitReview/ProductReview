@@ -1,6 +1,6 @@
 package org.products.productreviews.web.rest;
 
-import org.products.productreviews.app.User;
+import org.products.productreviews.app.Entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
