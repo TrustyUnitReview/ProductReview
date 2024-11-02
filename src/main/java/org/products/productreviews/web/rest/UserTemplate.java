@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/user")
-public class AccountTemplate {
+public class UserTemplate {
     // TODO: Inspect this, is there a better way to do this?
     //  Removing repo from createUser would fix the issue at the root.
     @Autowired
@@ -22,11 +22,11 @@ public class AccountTemplate {
 
 
     @GetMapping("/{id}")
-    public String viewAccount(@PathVariable long id, Model model){
+    public String viewUser(@PathVariable long id, Model model){
         //get user from repo -> User user = userRepo.findById(id)
         model.addAttribute("user", "");
         // if the current user is authenticated, show this template -> SecurityContextHolder maybe
-        return "userSelfAccount";
+        return "userSelfUser"; // TODO: renamed account to user, not sure if this name fits anymore.
         //TODO: if the current user is NOT authenticated, show different template
     }
 
@@ -50,7 +50,7 @@ public class AccountTemplate {
     }
 
     @PostMapping("/reg")
-    public String registerAccount(Model model, User user) {
+    public String registerUser(Model model, User user) {
         //encrypt user password
         //userRepo.save(user)
         model.addAttribute("user", user);
