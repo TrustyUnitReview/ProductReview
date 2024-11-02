@@ -1,11 +1,10 @@
 package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
-import org.products.productreviews.app.User;
+import org.products.productreviews.app.Entities.User;
 import org.products.productreviews.web.patcher.Patcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
