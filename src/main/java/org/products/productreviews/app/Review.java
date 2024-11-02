@@ -123,7 +123,7 @@ public class Review implements Serializable {
      */
     @Override
     public String toString() {
-        return "Review [reviewID=" + reviewID + "rating=" + rating.toString() + ", body=" + body + ", rating=" + rating + "]";
+        return "Review [reviewID=" + reviewID + "rating=" + rating.toString() + ", body=" + body + "]";
     }
 
 
