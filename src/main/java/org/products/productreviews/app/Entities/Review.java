@@ -15,7 +15,7 @@ public class Review {
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
-    private User user;
+    private User user; // TODO: imo, should be named to reviewer.
 
     public User getUser() {
         return user;
