@@ -127,17 +127,16 @@ public class Review implements Serializable {
     }
 
 
-
     public enum Star implements Serializable {
-        ONE(1), ONE_HALF(1.5f),
-        TWO(2), TWO_HALF(2.5f),
-        TREE(3), THREE_HALF(3.5f),
-        FOUR(4), FOUR_HALF(4.5f),
+        ONE(1),
+        TWO(2),
+        THREE(3),
+        FOUR(4),
         FIVE(5);
 
-        final float value;
+        final int value;
 
-        Star(float value){
+        Star(int value){
             this.value = value;
         }
 
