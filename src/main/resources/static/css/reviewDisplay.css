@@ -1,0 +1,17 @@
+.review-container {
+    background: darkkhaki;
+    width: 90%;
+}
+
+.review {
+    background: beige;
+    border: darkkhaki solid 1px;
+    transition: 1s;
+}
+
+.review:hover {
+    transform: scale(1.01);
+    background: wheat;
+    position: relative;
+    z-index: 1;
+}
