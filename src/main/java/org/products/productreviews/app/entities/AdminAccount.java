@@ -2,9 +2,9 @@ package org.products.productreviews.app.entities;
 
 import org.products.productreviews.app.UserRole;
 
-public class AdminUser extends User {
+public class AdminAccount extends Account {
     private UserRole role = UserRole.ADMIN;
 
-    public AdminUser() {
+    public AdminAccount() {
     }
 }

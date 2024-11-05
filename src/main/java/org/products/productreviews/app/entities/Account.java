@@ -2,7 +2,7 @@ package org.products.productreviews.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
-import org.products.productreviews.app.repositories.UserRepository;
+import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.UserRole;
 
 import javax.management.openmbean.InvalidKeyException;
@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 @Entity
-public class User {
+public class Account {
     @Id
     @Column(name="user_username")
     private String username;
@@ -19,7 +19,7 @@ public class User {
     private String password;
 
     @ManyToMany
-    private Set<User> follows;
+    private Set<Account> follows;
     @OneToMany
     @JoinColumn(name="user_username")
     private Set<Review> reviews;
@@ -31,7 +31,7 @@ public class User {
      * @param username Unique username, assumed through factory call.
      * @param password Authentication password.
      */
-    private User(String username, String password) {
+    private Account(String username, String password) {
         this.username = username;
         this.password = password;
         this.follows = new HashSet<>();
@@ -39,7 +39,7 @@ public class User {
     }
 
     // For JPA reflection, should never be called in theory.
-    protected User() {}
+    protected Account() {}
 
     /**
      * Format checks for username, throws error with rationale if a format check failed.
@@ -82,7 +82,7 @@ public class User {
      *
      * @return The new user created.
      */
-    public static User createUser(UserRepository repo, String username, String password) throws InvalidKeyException, InvalidFormatException {
+    public static Account createUser(AccountRepository repo, String username, String password) throws InvalidKeyException, InvalidFormatException {
         // Can we access the repo without it being a param? We seem to access it through DI atm.
         // I don't think so, but I might be missing something.
         if (repo.existsByUsername(username)){
@@ -93,7 +93,7 @@ public class User {
         // Will throw error and stop if format check fails
         checkPasswordFormat(username);
 
-        return new User(username, password);
+        return new Account(username, password);
     }
 
     public Set<Review> getReviews() {
@@ -104,7 +104,7 @@ public class User {
     //  I'd like to know why they were added since nothing is using them yet...
     //  It's forcing some code duplication and encapsulation concerns at the moment. Not to mention extra tests.
 
-    public void setUserName(UserRepository repo, String username) throws InvalidFormatException, InvalidKeyException {
+    public void setUserName(AccountRepository repo, String username) throws InvalidFormatException, InvalidKeyException {
         if (repo.existsByUsername(username)){
             throw new InvalidKeyException("Username already exists");
         }

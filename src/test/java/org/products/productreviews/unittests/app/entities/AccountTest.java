@@ -2,8 +2,8 @@ package org.products.productreviews.unittests.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.junit.jupiter.api.Test;
-import org.products.productreviews.app.entities.User;
-import org.products.productreviews.app.repositories.UserRepository;
+import org.products.productreviews.app.entities.Account;
+import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,9 +12,9 @@ import javax.management.openmbean.InvalidKeyException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class UserTest {
+class AccountTest {
     @Autowired
-    private UserRepository repo;
+    private AccountRepository repo;
 
     /**
      * We want to test a valid username, password combination.
@@ -23,7 +23,7 @@ class UserTest {
     @Test
     void createUserValid() throws Exception {
         // Test valid user creation cases
-        User validUser = User.createUser(repo, "newUser", "pass1");
+        Account validAccount = Account.createUser(repo, "newUser", "pass1");
     }
 
     /**
@@ -36,7 +36,8 @@ class UserTest {
         // TODO: Figure out how to select for this test a DB which contains testUser1
         // Checks the expected exception is thrown
         assertThrows(InvalidKeyException.class, () ->
-        {User.createUser(repo, "testUser1", "pass2");}
+        {
+            Account.createUser(repo, "testUser1", "pass2");}
         );
     }
 

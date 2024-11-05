@@ -1,7 +1,7 @@
 package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
-import org.products.productreviews.app.entities.User;
+import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.web.patcher.Patcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,13 +15,13 @@ import java.util.logging.Level;
 public class UserAPI {
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> editUser(@PathVariable long id, @RequestBody User partialUser) {
-        User currentUser = null;
+    public ResponseEntity<String> editUser(@PathVariable long id, @RequestBody Account partialAccount) {
+        Account currentAccount = null;
         //find user from userRepo by id and ensure user matches with authenticated user
         // if user does not match, don't patch
-        if (currentUser != null) {
+        if (currentAccount != null) {
             try {
-                Patcher.patch(currentUser, partialUser); //this approach is simple, but maybe DTO pattern
+                Patcher.patch(currentAccount, partialAccount); //this approach is simple, but maybe DTO pattern
                 //save to repo
             } catch (IllegalAccessException e) {
                 ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
@@ -35,11 +35,11 @@ public class UserAPI {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable long id) {
 
-        // find user by id
-        User user = null;
-        //authenticate  current user with found user
-        // if user does not match, don't delete
-        if (user != null) {
+        // find account by id
+        Account account = null;
+        //authenticate  current account with found account
+        // if account does not match, don't delete
+        if (account != null) {
             //userRepo.deleteById(id)
             return ResponseEntity.ok().build();
         }

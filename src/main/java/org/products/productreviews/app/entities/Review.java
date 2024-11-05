@@ -16,19 +16,19 @@ public class Review implements Serializable {
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
-    private User user;
+    private Account account;
     private Star rating;
 
     protected Review() {}
 
-    public Review(User owner, String reviewBody, Star rating){
-        this.user = owner;
+    public Review(Account owner, String reviewBody, Star rating){
+        this.account = owner;
         this.body = reviewBody;
         this.rating = rating;
     }
 
-    public User getOwner() {
-        return user;
+    public Account getOwner() {
+        return account;
     }
 
     public String getBody() {

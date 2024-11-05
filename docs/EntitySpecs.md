@@ -9,14 +9,14 @@ We can remove this file if we don't find it useful to upkeep by that point.
 Otherwise, we should update this and accurately keep version control information.
 
 # Entities
-## Users
+## Accounts
 ### Description
 Users can follow other users. They can review products. 
 They need to be able to log in, using a username and a password.
 
 ### Specifications
-- (PK) Username: Uniquely identify user.
-- Password: Used to authenticate user. Hashed (or see how authentication method wants us to store it)
+- (PK) Username: Uniquely identify account.
+- Password: Used to authenticate account. Hashed (or see how authentication method wants us to store it)
 
 - Follows: Many-to-Many Users association. Can have 0 follows, followers.
     No need to know followers, not sure if it's actually supposed to be one-to-many in that case? Don't think so.
@@ -26,7 +26,7 @@ They need to be able to log in, using a username and a password.
 ### Description
 Reviews have a score associated (1 out of 5 stars, we can do halves to do 1/10). 
 Reviews have a text description for rationale behind the score.
-Reviews have an associated user who created the review.
+Reviews have an associated account who created the review.
 Reviews are associated to a product.
 
 ### Specifications
