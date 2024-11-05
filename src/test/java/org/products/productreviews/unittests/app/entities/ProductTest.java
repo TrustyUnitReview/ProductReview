@@ -4,19 +4,21 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.products.productreviews.app.entities.Account;
-import org.products.productreviews.app.repositories.AccountRepository;
+import org.products.productreviews.app.entities.Product;
+import org.products.productreviews.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.management.openmbean.InvalidKeyException;
+import java.security.InvalidKeyException;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class AccountTest {
+class ProductTest {
     @Autowired
-    private AccountRepository repo;
+    private ProductRepository repo;
 
     /**
      * Setup expected database for following tests.
@@ -24,8 +26,8 @@ class AccountTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Account validAccount = Account.createAccount(repo,"testUser1", "p1");
-        repo.save(validAccount);
+        Product validProduct = Product.createProduct(repo,"prodName1", "desc1", "img.png");
+        repo.save(validProduct);
     }
 
     /**
@@ -37,27 +39,39 @@ class AccountTest {
     }
 
     /**
-     * We want to test a valid username, password combination.
+     * We want to test a valid product, no exception is thrown.
+     *
      * If an exception is thrown, test will fail!
      */
     @Test
-    void createUserValid() throws Exception {
+    void createProductValid() throws Exception {
         // Test valid user creation cases
-        Account validAccount = Account.createAccount(repo, "newUser", "pass1");
+        Product valProduct = Product.createProduct(repo, "newProd", "desc2", "img.png");
     }
 
     /**
-     * We want to test an invalid username (one which already exists).
+     * We want to test an invalid product name (one which already exists).
      * If the correct exception is thrown (InvalidKeyException), test passes.
      * Other exceptions fail it.
      */
     @Test
-    void createUserRepeatUsername() throws InvalidFormatException{
+    void createProductRepeatName() throws InvalidFormatException{
         // Checks the expected exception is thrown
         assertThrows(InvalidKeyException.class, () ->
-        {
-            Account.createAccount(repo, "testUser1", "pass2");}
+                Product.createProduct(repo, "prodName1", "_", "_")
         );
+    }
+
+    /**
+     * We want to test the scoring system of reviews for a product.
+     *
+     * Currently, stubbed! Not much to do yet.
+     */
+    @Test
+    void productScore() throws InvalidFormatException{
+        Product testProduct = repo.findByName("prodName1");
+        // Stubbing test value set to 0.0f for now
+        assertEquals(0.0f, testProduct.getReviewScore());
     }
 
     // Note: No tests for invalidFormats because those methods are not defined yet.
