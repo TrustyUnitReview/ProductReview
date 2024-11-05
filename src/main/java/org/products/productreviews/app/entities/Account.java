@@ -3,7 +3,6 @@ package org.products.productreviews.app.entities;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
-import org.products.productreviews.app.UserRole;
 
 import javax.management.openmbean.InvalidKeyException;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ public class Account {
     @OneToMany
     @JoinColumn(name="user_username")
     private Set<Review> reviews;
-    private UserRole role = UserRole.DEFAULT;
 
     /**
      * Private constructor for factory use.
@@ -96,29 +94,10 @@ public class Account {
         return new Account(username, password);
     }
 
+    /**
+     * @return Reviews made by this user.
+     */
     public Set<Review> getReviews() {
         return reviews;
     }
-
-    // TODO: I feel like all of these setters are not a great idea.
-    //  I'd like to know why they were added since nothing is using them yet...
-    //  It's forcing some code duplication and encapsulation concerns at the moment. Not to mention extra tests.
-
-    public void setUserName(AccountRepository repo, String username) throws InvalidFormatException, InvalidKeyException {
-        if (repo.existsByUsername(username)){
-            throw new InvalidKeyException("Username already exists");
-        }
-        checkUsernameFormat(username);
-        this.username = username;
-    }
-
-    public void setPassword(String password) throws InvalidFormatException {
-        checkPasswordFormat(password);
-        this.password = password;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
 }
