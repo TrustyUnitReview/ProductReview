@@ -91,7 +91,7 @@ public class Account {
         // Will throw error and stop if format check fails
         checkUsernameFormat(username);
         // Will throw error and stop if format check fails
-        checkPasswordFormat(username);
+        checkPasswordFormat(password);
 
         return new Account(username, password);
     }
