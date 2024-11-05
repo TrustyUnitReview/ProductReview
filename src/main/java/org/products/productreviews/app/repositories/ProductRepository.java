@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
     boolean existsByName(String name);
+    Product findByName(String name);
 }
