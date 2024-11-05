@@ -18,7 +18,7 @@ class UserRepositoryTest {
      */
     @Test
     void existsByUsername() {
-        // Now, just figure out how to select for this test a DB which contains testUser1 (and not userNotInDB).
+        // TODO: Figure out how to select for this test a DB which contains testUser1 (and not userNotInDB).
         assertTrue(repo.existsByUsername("testUser1"));
         assertFalse(repo.existsByUsername("userNotInDB"));
     }
