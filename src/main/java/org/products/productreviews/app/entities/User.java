@@ -46,9 +46,25 @@ public class User {
      * Limitation: Will only return the first error, unless we implement a string builder for the error message
      * (which is feasible).
      *
+     * @param username The username to check for format validity.
+     *
      * @throws InvalidFormatException If the username provided is in an invalid format
      */
-    private static void checkUsernameFormat() throws InvalidFormatException {
+    private static void checkUsernameFormat(String username) throws InvalidFormatException {
+        // TODO: Implement sanitation rules, throw exceptions for usernames outside of them.
+    }
+
+    /**
+     * Format checks for password, throws error with rationale if a format check failed.
+     * Hands control back to caller otherwise.
+     * Limitation: Will only return the first error, unless we implement a string builder for the error message
+     * (which is feasible).
+     *
+     * @param password The password to check for format validity.
+     *
+     * @throws InvalidFormatException If the username provided is in an invalid format
+     */
+    private static void checkPasswordFormat(String password) throws InvalidFormatException {
         // TODO: Implement sanitation rules, throw exceptions for usernames outside of them.
     }
 
@@ -61,7 +77,7 @@ public class User {
      * @param password A string password to match against for authentication.
      *
      * @throws InvalidKeyException If the username provided already exists.
-     * @throws InvalidFormatException If the username provided is in an invalid format.
+     * @throws InvalidFormatException If the username or password provided is in an invalid format.
      *
      * @return The new user created.
      */
@@ -72,10 +88,10 @@ public class User {
             throw new InvalidKeyException("Username already exists");
         }
         // Will throw error and stop if format check fails
-        checkUsernameFormat();
+        checkUsernameFormat(username);
+        // Will throw error and stop if format check fails
+        checkPasswordFormat(username);
 
-        // TODO: Allow for client side password strength requirements?
-        //  Maybe auth strategy takes care of that for us?
         return new User(username, password);
     }
 
@@ -83,11 +99,20 @@ public class User {
         return reviews;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    // TODO: I feel like all of these setters are not a great idea.
+    //  I'd like to know why they were added since nothing is using them yet...
+    //  It's forcing some code duplication and encapsulation concerns at the moment. Not to mention extra tests.
+
+    public void setUserName(UserRepository repo, String username) throws InvalidFormatException, InvalidKeyException {
+        if (repo.existsByUsername(username)){
+            throw new InvalidKeyException("Username already exists");
+        }
+        checkUsernameFormat(username);
+        this.username = username;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws InvalidFormatException {
+        checkPasswordFormat(password);
         this.password = password;
     }
 
