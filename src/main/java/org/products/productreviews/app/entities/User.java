@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
+    @Column(name="user_username")
     private String username;
     // TODO: Replace this unsafe string store with a true authentication method
     private String password;
