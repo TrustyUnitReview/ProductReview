@@ -2,7 +2,6 @@ package org.products.productreviews.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
-import org.products.productreviews.app.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
 
 import java.awt.*;
