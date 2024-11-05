@@ -11,13 +11,13 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class AccountAPI {
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> editUser(@PathVariable long id, @RequestBody Account partialAccount) {
+    public ResponseEntity<String> editAccount(@PathVariable long id, @RequestBody Account partialAccount) {
         Account currentAccount = null;
-        //find user from userRepo by id and ensure user matches with authenticated user
+        // find user from userRepo by id and ensure user matches with authenticated user
         // if user does not match, don't patch
         if (currentAccount != null) {
             try {
@@ -33,7 +33,7 @@ public class AccountAPI {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable long id) {
+    public ResponseEntity<String> deleteAccount(@PathVariable long id) {
 
         // find account by id
         Account account = null;

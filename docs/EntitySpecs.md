@@ -11,14 +11,14 @@ Otherwise, we should update this and accurately keep version control information
 # Entities
 ## Accounts
 ### Description
-Users can follow other users. They can review products. 
+Accounts can follow other Accounts. They can review products. 
 They need to be able to log in, using a username and a password.
 
 ### Specifications
 - (PK) Username: Uniquely identify account.
 - Password: Used to authenticate account. Hashed (or see how authentication method wants us to store it)
 
-- Follows: Many-to-Many Users association. Can have 0 follows, followers.
+- Follows: Many-to-Many Accounts association. Can have 0 follows, followers.
     No need to know followers, not sure if it's actually supposed to be one-to-many in that case? Don't think so.
 - Reviews: One-to-Many Reviews association. Can have 0.
 

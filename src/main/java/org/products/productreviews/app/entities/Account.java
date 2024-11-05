@@ -80,7 +80,7 @@ public class Account {
      *
      * @return The new user created.
      */
-    public static Account createUser(AccountRepository repo, String username, String password) throws InvalidKeyException, InvalidFormatException {
+    public static Account createAccount(AccountRepository repo, String username, String password) throws InvalidKeyException, InvalidFormatException {
         // Can we access the repo without it being a param? We seem to access it through DI atm.
         // I don't think so, but I might be missing something.
         if (repo.existsByUsername(username)){

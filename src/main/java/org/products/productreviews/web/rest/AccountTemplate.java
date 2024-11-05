@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import java.util.Arrays;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class AccountTemplate {
     // TODO: Inspect this, is there a better way to do this?
     //  Removing repo from createUser would fix the issue at the root.
@@ -22,7 +22,7 @@ public class AccountTemplate {
 
 
     @GetMapping("/{id}")
-    public String viewUser(@PathVariable long id, Model model){
+    public String viewAccount(@PathVariable long id, Model model){
         //get user from repo -> Account user = userRepo.findById(id)
         model.addAttribute("user", "");
         // if the current user is authenticated, show this template -> SecurityContextHolder maybe
@@ -31,10 +31,10 @@ public class AccountTemplate {
     }
 
     @GetMapping("/reg")
-    public String userRegistration(Model model) {
+    public String accountRegistration(Model model) {
         // TODO: Add input for username, password
         try{
-            model.addAttribute("newUser", Account.createUser(repo, "username", "password"));
+            model.addAttribute("newUser", Account.createAccount(repo, "username", "password"));
         }
         catch (Exception e){
             // TODO: Better error handler, have a way to retry registration? -> Different behavior based on type?
@@ -44,13 +44,13 @@ public class AccountTemplate {
     }
 
     @GetMapping("/login")
-    public String userLogin(Model model, Account account) {
+    public String accountLogin(Model model, Account account) {
         model.addAttribute("user", account);
         return "userLogin";
     }
 
     @PostMapping("/reg")
-    public String registerUser(Model model, Account account) {
+    public String registerAccount(Model model, Account account) {
         //encrypt account password
         //userRepo.save(account)
         model.addAttribute("user", account);
