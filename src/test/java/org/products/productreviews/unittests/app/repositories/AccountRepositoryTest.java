@@ -1,5 +1,6 @@
 package org.products.productreviews.unittests.app.repositories;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Account;
@@ -14,10 +15,22 @@ class AccountRepositoryTest {
     @Autowired
     private AccountRepository repo;
 
+    /**
+     * Setup expected database for following tests.
+     * @throws Exception if the factory creation fails (it shouldn't in theory)
+     */
     @BeforeEach
     void setUp() throws Exception {
-        // TODO: Figure out how to select for this test a DB which contains testUser1 (and not userNotInDB).
         Account validAccount = Account.createUser(repo,"testUser1", "p1");
+        repo.save(validAccount);
+    }
+
+    /**
+     * Drop table to set it up again.
+     */
+    @AfterEach
+    void tearDown(){
+        repo.deleteAll();
     }
 
     /**

@@ -1,6 +1,8 @@
 package org.products.productreviews.unittests.app.entities;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
@@ -15,6 +17,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountTest {
     @Autowired
     private AccountRepository repo;
+
+    /**
+     * Setup expected database for following tests.
+     * @throws Exception if the factory creation fails (it shouldn't in theory)
+     */
+    @BeforeEach
+    void setUp() throws Exception {
+        Account validAccount = Account.createUser(repo,"testUser1", "p1");
+        repo.save(validAccount);
+    }
+
+    /**
+     * Drop table to set it up again.
+     */
+    @AfterEach
+    void tearDown(){
+        repo.deleteAll();
+    }
 
     /**
      * We want to test a valid username, password combination.
