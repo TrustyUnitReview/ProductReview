@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/user")
-public class UserTemplate {
+public class AccountTemplate {
     // TODO: Inspect this, is there a better way to do this?
     //  Removing repo from createUser would fix the issue at the root.
     @Autowired

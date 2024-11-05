@@ -12,7 +12,7 @@ import java.util.logging.Level;
 
 @Controller
 @RequestMapping("/user")
-public class UserAPI {
+public class AccountAPI {
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> editUser(@PathVariable long id, @RequestBody Account partialAccount) {
