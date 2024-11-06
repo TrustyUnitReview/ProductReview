@@ -6,6 +6,7 @@ import org.products.productreviews.app.repositories.ProductRepository;
 
 import java.awt.*;
 import java.security.InvalidKeyException;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -47,6 +48,7 @@ public class Product {
         this.price = price;
         this.description = description;
         this.imagePath = imagePath;
+        this.reviews = new HashSet<>();
         loadImage(); // Cannot re-use protected constructor, has to be called after imagePath is set.
     }
 
@@ -90,6 +92,29 @@ public class Product {
     public float getReviewScore(){
         // TODO: Implement scoring algorithm... May take in a strategy later
         return 0.0f; // Between 1-5
+    }
+
+    /**
+     *
+     * @return The name of the product
+     */
+    public String getName(){ //required for web testing
+        return name;
+    }
+
+    /**
+     * @return The description of the product.
+     */
+    public String getDescription(){ //required for web testing
+        return description;
+    }
+
+    /**
+     *
+     * @return The price of the product.
+     */
+    public float getPrice(){ //required for web testing
+        return price;
     }
 
     /**
