@@ -50,6 +50,8 @@ public class ReviewAPI {
         return ResponseEntity.notFound().build();
     }
 
+    //TODO: not sure if there should be a method here to assign a review to a product that has review.setProduct(product.get())
+
     @PostMapping("/create")
     ResponseEntity<Void> createReviewAPI(@RequestBody Review completeReview) {
         // Add to repository

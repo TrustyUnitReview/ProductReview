@@ -1,23 +1,21 @@
 package org.products.productreviews.app.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 @Entity
-public class Review implements Serializable {
+public class Review {
 
     @Id
-    private long reviewID;
+    private long reviewID; //TODO: need to make auto generated I think
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
     private Account account;
     private Star rating;
+    //TODO: may need a product field with setter that gets called when review form is submitted
 
     protected Review() {}
 
@@ -38,6 +36,10 @@ public class Review implements Serializable {
     public Star getRating() {return rating;}
 
     public long getReviewID() {return reviewID;}
+
+    public Account getAccount() {
+        return account;
+    }
 
     public void setReviewID(long reviewID) {this.reviewID = reviewID;}
 
@@ -164,5 +166,7 @@ public class Review implements Serializable {
         public String toString() {
             return "Star [value=" + value + "]";
         }
+
+
     }
 }

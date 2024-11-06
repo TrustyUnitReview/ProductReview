@@ -21,7 +21,7 @@ class ProductRepositoryTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Product validAccount = Product.createProduct(repo,"test1", "d1", "_.png");
+        Product validAccount = Product.createProduct(repo,"test1", 100f,"d1", "_.png");
         repo.save(validAccount);
     }
 

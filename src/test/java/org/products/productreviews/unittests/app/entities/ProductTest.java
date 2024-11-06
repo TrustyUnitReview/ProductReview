@@ -26,7 +26,7 @@ class ProductTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Product validProduct = Product.createProduct(repo,"prodName1", "desc1", "img.png");
+        Product validProduct = Product.createProduct(repo,"prodName1", 100f,"desc1", "img.png");
         repo.save(validProduct);
     }
 
@@ -46,7 +46,7 @@ class ProductTest {
     @Test
     void createProductValid() throws Exception {
         // Test valid user creation cases
-        Product valProduct = Product.createProduct(repo, "newProd", "desc2", "img.png");
+        Product valProduct = Product.createProduct(repo, "newProd", 100f, "desc2", "img.png");
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductTest {
     void createProductRepeatName() throws InvalidFormatException{
         // Checks the expected exception is thrown
         assertThrows(InvalidKeyException.class, () ->
-                Product.createProduct(repo, "prodName1", "_", "_")
+                Product.createProduct(repo, "prodName1", 100f, "_", "_")
         );
     }
 

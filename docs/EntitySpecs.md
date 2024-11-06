@@ -51,6 +51,7 @@ We don't care to store seller information as an entity, that's why it's explicit
 ### Specifications
 - (PK) Name: String, short sentence. *Limit to 20 words ***Tentative limit**
 
+- Price: Float, price of product.
 - Description: String, short paragraph. *Limit to 250 words ***Tentative limit**
 - Link: Set<String>, links to sellers. 1 long string allowed, check for link formatting.
 - Image: Image file. Do format checks.
