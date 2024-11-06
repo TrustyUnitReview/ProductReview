@@ -50,7 +50,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the end point /product/{id} returns the product details associated with the given id
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testProductDetailsFound() throws Exception {
@@ -68,7 +68,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the end point /product/{id} returns the appropriate error message when given an invalid product id
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testProductDetailsNotFound() throws Exception {
@@ -83,7 +83,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the endpoint /product/{id}/reviews returns the list of reviews associated with the given product id
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testDisplayProductReviews() throws Exception {
@@ -103,7 +103,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the endpoint /product/{id}/reviews returns the appropriate error message when given an invalid product id
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testDisplayProductEmptyReviews() throws Exception {
@@ -118,7 +118,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the endpoint /product/{id}/submitReview successfully adds a review entity to the given product
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testSubmitValidReview() throws Exception {
@@ -142,7 +142,7 @@ public class ProductAPITest {
 
     /**
      * Verifies that the endpoint /product/{id}/submitReview returns appropriate error message when the given product id is invalid
-     * @throws Exception
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void testSubmitInvalidReview() throws Exception {
