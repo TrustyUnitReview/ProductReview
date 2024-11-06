@@ -16,6 +16,7 @@ public class Product {
     // Should this be the PK?
     @Column(unique=true)
     private String name;
+    private float price;
     private String description;
     // Cannot store Image or Path objects directly, required to store string to load later
     private String imagePath;
@@ -41,8 +42,9 @@ public class Product {
      * @param description The description of the product.
      * @param imagePath The filepath given as a String.
      */
-    private Product(String name, String description, String imagePath){
+    private Product(String name, float price, String description, String imagePath){
         this.name = name;
+        this.price = price;
         this.description = description;
         this.imagePath = imagePath;
         loadImage(); // Cannot re-use protected constructor, has to be called after imagePath is set.
@@ -63,7 +65,7 @@ public class Product {
      * @throws InvalidFormatException If a description, or imagePath does not follow a proper format
      *  (see "check..." helper methods for format specifications).
      */
-    public static Product createProduct(ProductRepository repo, String name, String description, String imagePath)
+    public static Product createProduct(ProductRepository repo, String name, float price, String description, String imagePath)
             throws InvalidKeyException, InvalidFormatException {
         if (repo.existsByName(name)){
             throw new InvalidKeyException("Name already exists");
@@ -71,7 +73,7 @@ public class Product {
         checkDescriptionFormat();
         checkImagePath();
 
-        return new Product(name, description, imagePath);
+        return new Product(name, price, description, imagePath);
     }
 
     private static void checkDescriptionFormat() throws InvalidFormatException {
@@ -95,5 +97,20 @@ public class Product {
      */
     public Image getImage(){
         return loadedImage;
+    }
+
+    /**
+     * @return reviews of the product.
+     */
+    public Set<Review> getReviews(){
+        return reviews;
+    }
+
+    /**
+     *
+     * @param review
+     */
+    public void addReview(Review review){
+        reviews.add(review);
     }
 }

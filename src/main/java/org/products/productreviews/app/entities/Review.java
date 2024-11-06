@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 @Entity
-public class Review implements Serializable {
+public class Review {
 
     @Id
     private long reviewID;
@@ -18,6 +18,7 @@ public class Review implements Serializable {
     @JoinColumn(name = "user_username")
     private Account account;
     private Star rating;
+    //TODO: may need a product field with setter that gets called when review form is submitted
 
     protected Review() {}
 
