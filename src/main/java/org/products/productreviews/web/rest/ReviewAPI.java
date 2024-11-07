@@ -16,9 +16,9 @@ import java.util.logging.Level;
 @RequestMapping("review")
 public class ReviewAPI {
 
-    private ReviewRepository reviewRepo;
+    private final ReviewRepository reviewRepo;
 
-    ReviewAPI(ReviewRepository reviewRepo) { this.reviewRepo = reviewRepo; }
+    ReviewAPI(ReviewRepository reviewRepository) { reviewRepo = reviewRepository; }
 
     /*
      * **********************

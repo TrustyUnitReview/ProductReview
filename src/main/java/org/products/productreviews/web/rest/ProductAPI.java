@@ -4,7 +4,6 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.web.request.ReviewRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,9 +19,9 @@ import java.util.Set;
 @RequestMapping("/product")
 public class ProductAPI {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepo;
 
-    ProductAPI(ProductRepository productRepository) {productRepository = productRepository;}
+    ProductAPI(ProductRepository productRepository) {productRepo = productRepository;}
 
     /**
      * Fetches details for a product by its ID
@@ -33,7 +32,7 @@ public class ProductAPI {
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<?> getProductDetails(@PathVariable("id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productRepo.findById(productId);
         if (product.isPresent()) {
             return ResponseEntity.ok(product);
         }else{
@@ -50,7 +49,7 @@ public class ProductAPI {
     @GetMapping("/{id}/reviews")
     @ResponseBody
     public ResponseEntity<?> displayProductReviews(@PathVariable("id") long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productRepo.findById(productId);
         if (product.isPresent()) {
             Set<Review> reviews = product.get().getReviews();
             return ResponseEntity.ok(reviews);
@@ -70,7 +69,7 @@ public class ProductAPI {
     @PostMapping("/{id}/submitReview")
     @ResponseBody
     public ResponseEntity<?> submitReview(@PathVariable("id") long productId, @RequestBody ReviewRequest reviewRequest) {
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productRepo.findById(productId);
         //TODO: Replace "null" with the current account. Spring Security can get the Current Account
         Review review = reviewRequest.toReview(null);
         if (product.isPresent()) {
@@ -78,7 +77,7 @@ public class ProductAPI {
             //TODO: Get current account, add review to current account, save account
 
             // Product will save review by cascade
-            productRepository.save(product.get());
+            productRepo.save(product.get());
             return ResponseEntity.ok("Review added successfully");
 
         }else{
