@@ -3,6 +3,7 @@ package org.products.productreviews.web.rest;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.web.request.ReviewRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,19 +63,21 @@ public class ProductAPI {
      * Submits a review for a product by its ID.
      *
      * @param productId The ID of the product.
-     * @param review The review to be added.
+     * @param reviewRequest The review request to turned into a review.
      * @return ResponseEntity indicating the result of the operation.
      */
     //TODO: may need to use @Transactional ?
     @PostMapping("/{id}/submitReview")
     @ResponseBody
-    public ResponseEntity<?> submitReview(@PathVariable("id") long productId, @RequestBody Review review) {
+    public ResponseEntity<?> submitReview(@PathVariable("id") long productId, @RequestBody ReviewRequest reviewRequest) {
         Optional<Product> product = productRepository.findById(productId);
+        //TODO: Replace "null" with the current account. Spring Security can get the Current Account
+        Review review = reviewRequest.toReview(null);
         if (product.isPresent()) {
             product.get().addReview(review);
-            //TODO: where does the review get created?
-            //TODO: review needs to save this product
-            //TODO: account needs to add review to their set
+            //TODO: Get current account, add review to current account, save account
+
+            // Product will save review by cascade
             productRepository.save(product.get());
             return ResponseEntity.ok("Review added successfully");
 
