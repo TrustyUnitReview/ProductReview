@@ -25,8 +25,13 @@ public class Product {
     private Image loadedImage;
     @ElementCollection
     private Set<String> sellerLinks;
-    // FIXME: Requires review to be an entity.
-    @OneToMany
+    // Make sure no review exists without a product
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "product"
+    )
     private Set<Review> reviews;
 
     /**

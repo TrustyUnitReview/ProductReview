@@ -14,13 +14,16 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "user_username")
     private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
+    @Enumerated(EnumType.STRING)
     private Star rating;
-    //TODO: may need a product field with setter that gets called when review form is submitted
 
-    protected Review() {}
+    public Review() {}
 
-    public Review(Account owner, String reviewBody, Star rating){
+    public Review(Account owner, Product product, String reviewBody, Star rating){
         this.account = owner;
+        this.product = product;
         this.body = reviewBody;
         this.rating = rating;
     }
@@ -40,6 +43,10 @@ public class Review {
     public Account getAccount() {
         return account;
     }
+
+    public Product getProduct() {return product;}
+
+    public void setProduct(Product product) {this.product = product;}
 
     public void setReviewID(long reviewID) {this.reviewID = reviewID;}
 
@@ -152,6 +159,17 @@ public class Review {
         }
 
         public float getValue() {return value;}
+
+        public static Star fromInt(int value){
+            return switch (value) {
+                case 1 -> ONE;
+                case 2 -> TWO;
+                case 3 -> THREE;
+                case 4 -> FOUR;
+                case 5 -> FIVE;
+                default -> null;
+            };
+        }
 
 
         /**
