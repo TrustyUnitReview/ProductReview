@@ -4,7 +4,6 @@ import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.web.patcher.Patcher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,37 +27,29 @@ public class ReviewAPI {
      */
 
     @PatchMapping("/edit")
-    ResponseEntity<Review> editReviewAPI(@RequestBody Review incompleteReview) {
-        // Find existing Review in DB reviewRepo.findByID(incompleteReview.getID())
-        Review existingReview = null;
+    ResponseEntity<Review> editReview(@RequestBody Review incompleteReview) {
+        long existingReviewID = incompleteReview.getReviewID();
+        Review existingReview = reviewRepo.findById(existingReviewID).orElse(new Review());
         try{
             // Patch
             Patcher.patch(existingReview, incompleteReview);
             // Save
-            // ReviewRepo.save(existingIntern);
+            reviewRepo.save(existingReview);
         } catch (Exception e) {
             ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(existingReview);
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<String> editReviewAPI(@PathVariable("id") int id) {
-        Optional<Review> existingReview = null; // Find By ID
-        if (existingReview.isPresent()) {
-            // Delete from Repo
-            return ResponseEntity.ok().build();
+    ResponseEntity<String> deleteReview(@PathVariable("id") long id) {
+        Optional<Review> existingReview = reviewRepo.findById(id);
+        if (existingReview.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
-    }
-
-    //TODO: not sure if there should be a method here to assign a review to a product that has review.setProduct(product.get())
-
-    @PostMapping("/create")
-    ResponseEntity<Void> createReviewAPI(@RequestBody Review completeReview) {
-        // Add to repository
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        // Delete from Repo
+        reviewRepo.delete(existingReview.get());
+        return ResponseEntity.ok().build();
     }
 
 }
