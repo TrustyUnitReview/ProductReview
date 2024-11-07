@@ -100,4 +100,11 @@ public class Account {
     public Set<Review> getReviews() {
         return reviews;
     }
+
+    /**
+     * Adds the provided Review to this account.
+     * @param review The Review to be added
+     * @return True if the Review was added, False if not.
+     */
+    public boolean addReview(Review review) {return reviews.add(review);}
 }
