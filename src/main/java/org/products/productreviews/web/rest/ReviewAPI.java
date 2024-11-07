@@ -2,7 +2,9 @@ package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Review;
+import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.web.patcher.Patcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,9 @@ import java.util.logging.Level;
 @RequestMapping("review")
 public class ReviewAPI {
 
-    // private final UserRepo userRepo;
-    // private final ReviewRepo reviewRepo;
+    private ReviewRepository reviewRepo;
+
+    ReviewAPI(ReviewRepository reviewRepo) { this.reviewRepo = reviewRepo; }
 
     /*
      * **********************

@@ -19,8 +19,9 @@ import java.util.Set;
 @RequestMapping("/product")
 public class ProductAPI {
 
-    @Autowired
     private ProductRepository productRepository;
+
+    ProductAPI(ProductRepository productRepository) {productRepository = productRepository;}
 
     /**
      * Fetches details for a product by its ID
