@@ -9,7 +9,8 @@ import java.util.HashMap;
 public class Review {
 
     @Id
-    private long reviewID; //TODO: need to make auto generated I think
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long reviewID;
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
