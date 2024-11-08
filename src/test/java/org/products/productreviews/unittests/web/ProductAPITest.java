@@ -89,7 +89,7 @@ public class ProductAPITest {
     void testDisplayProductReviews() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
         Account account = Account.createAccount(accountRepository, "testUser", "pass1");
-        Review review = new Review(account, "Test Review Description", Review.Star.FIVE);
+        Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
         product.addReview(review);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
@@ -124,7 +124,7 @@ public class ProductAPITest {
     void testSubmitValidReview() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
         Account account = Account.createAccount(accountRepository, "testUser", "pass1");
-        Review review = new Review(account, "Test Review Description", Review.Star.FIVE);
+        Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
         when(reviewRepository.findById(0L)).thenReturn(Optional.of(review)); //needed to set to 0, I think because Review does not have auto generated ID yet

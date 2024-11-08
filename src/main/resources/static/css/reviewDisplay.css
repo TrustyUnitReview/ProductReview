@@ -9,9 +9,47 @@
     transition: 1s;
 }
 
+.fixed-width-card {
+    height: 100%;
+}
+
 .review:hover {
     transform: scale(1.01);
     background: wheat;
     position: relative;
     z-index: 1;
+}
+
+.rating-star {
+    transform: scale(2);
+    cursor: pointer;
+    color: gray;
+    padding: 0 0.5rem;
+    transition: color 0.15s;
+}
+
+.rating-star:active {
+    color: darkgoldenrod !important;
+}
+
+.stars-container{
+    position: relative;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin: 0 -0.5rem;
+}
+
+.form-check-input{
+    position: absolute;
+    opacity: 0;
+}
+
+.form-check-input:checked ~ label{
+    color: gold;
+}
+
+.form-check-input:hover ~ label{
+    color: goldenrod;
+    transition: none;
 }

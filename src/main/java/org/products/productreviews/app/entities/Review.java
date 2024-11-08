@@ -9,15 +9,20 @@ import java.util.HashMap;
 public class Review {
 
     @Id
-    private long reviewID; //TODO: need to make auto generated I think
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long reviewID;
+    @Column(columnDefinition = "LONGTEXT")
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
     private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product")
+    private Product product;
+    @Enumerated(EnumType.STRING)
     private Star rating;
-    //TODO: may need a product field with setter that gets called when review form is submitted
 
-    protected Review() {}
+    public Review() {}
 
     public Review(Account owner, String reviewBody, Star rating){
         this.account = owner;
@@ -25,9 +30,7 @@ public class Review {
         this.rating = rating;
     }
 
-    public Account getOwner() {
-        return account;
-    }
+    // Getters and Setters
 
     public String getBody() {
         return body;
@@ -41,11 +44,17 @@ public class Review {
         return account;
     }
 
+    public Product getProduct() {return product;}
+
+    public void setProduct(Product product) {this.product = product;}
+
     public void setReviewID(long reviewID) {this.reviewID = reviewID;}
 
     public void setBody(String body) {this.body = body;}
 
     public void setRating(Star rating) {this.rating = rating;}
+
+    public void setAccount(Account account) {this.account = account;}
 
     /**
      * Indicates whether some other object is "equal to" this one.
@@ -134,10 +143,13 @@ public class Review {
      */
     @Override
     public String toString() {
-        return "Review [reviewID=" + reviewID + "rating=" + rating.toString() + ", body=" + body + "]";
+        return "Review [reviewID=" + reviewID + ", rating=" + rating.toString() + ", body=" + body + "]";
     }
 
 
+    /**
+     * Enum for Review ratings
+     */
     public enum Star implements Serializable {
         ONE(1),
         TWO(2),
@@ -153,6 +165,21 @@ public class Review {
 
         public float getValue() {return value;}
 
+        /**
+         * Get A Star Enum from an integer value representation
+         * @param value Integer representation
+         * @return The Star representation
+         */
+        public static Star fromInt(int value){
+            return switch (value) {
+                case 1 -> ONE;
+                case 2 -> TWO;
+                case 3 -> THREE;
+                case 4 -> FOUR;
+                case 5 -> FIVE;
+                default -> null;
+            };
+        }
 
         /**
          * Returns the name of this enum constant, as contained in the
