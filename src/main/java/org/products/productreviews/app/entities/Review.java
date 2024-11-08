@@ -29,6 +29,8 @@ public class Review {
         this.rating = rating;
     }
 
+    // Getters and Setters
+
     public Account getOwner() {
         return account;
     }
@@ -146,6 +148,9 @@ public class Review {
     }
 
 
+    /**
+     * Enum for Review ratings
+     */
     public enum Star implements Serializable {
         ONE(1),
         TWO(2),
@@ -161,6 +166,11 @@ public class Review {
 
         public float getValue() {return value;}
 
+        /**
+         * Get A Star Enum from an integer value representation
+         * @param value Integer representation
+         * @return The Star representation
+         */
         public static Star fromInt(int value){
             return switch (value) {
                 case 1 -> ONE;

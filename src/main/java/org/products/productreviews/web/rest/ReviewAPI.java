@@ -26,6 +26,11 @@ public class ReviewAPI {
      * **********************
      */
 
+    /**
+     * Edit a Review object or create a new one if one doesn't exist.
+     * @param incompleteReview The incomplete review object with the desired changes
+     * @return The final review after all changes have been applied.
+     */
     @PatchMapping("/edit")
     ResponseEntity<Review> editReview(@RequestBody Review incompleteReview) {
         long existingReviewID = incompleteReview.getReviewID();
@@ -41,6 +46,11 @@ public class ReviewAPI {
         return ResponseEntity.status(HttpStatus.OK).body(existingReview);
     }
 
+    /**
+     * Delete a review
+     * @param id ID of the review to be deleted
+     * @return HTTP OK is ID exists. HTTP NOT FOUND if the ID doesn't exist.
+     */
     @DeleteMapping("/delete/{id}")
     ResponseEntity<String> deleteReview(@PathVariable("id") long id) {
         Optional<Review> existingReview = reviewRepo.findById(id);

@@ -31,9 +31,16 @@ public class ReviewTemplate {
      * ***************************
      */
 
+    /**
+     * Show all the Reviews owned by the current user.
+     * <br>
+     * <strong>W.I.P</strong>
+     * @param model Model
+     * @return The "selfReviews" template
+     */
     @GetMapping("/owner")
     String myReviews(Model model) {
-        // Retrieved logged account from auth match with repo
+        //TODO: Retrieved logged account from auth match with repo
         model.addAttribute("reviews", "");
         return "selfReviews";
     }

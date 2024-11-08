@@ -17,6 +17,11 @@ public class DashboardTemplate {
 
     public DashboardTemplate(ProductRepository productRepository) {productRepo = productRepository;}
 
+    /**
+     * Return the dashboard template, sends all existing products to the view
+     * @param model Model
+     * @return "dashboard" template
+     */
     @GetMapping
     public String dashboard(Model model) {
         ArrayList<Product> products = new ArrayList<>();
