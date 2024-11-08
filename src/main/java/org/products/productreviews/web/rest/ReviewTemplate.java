@@ -4,7 +4,7 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
-import org.products.productreviews.app.repositories.ReviewRepository;
+import org.products.productreviews.web.request.ReviewRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +53,8 @@ public class ReviewTemplate {
      * <code>
      *     /review/search?username=james?productName=Pen
      * </code>
+     * <p>
+     * Redirects to <code>/review/owner</code> if all request parameters are empty
      *
      * @param username Username of the User to search for
      * @param productName Product Name of the product to search for
@@ -67,6 +69,7 @@ public class ReviewTemplate {
 
         String realUsername = username.orElse("");
         String realProductName = productName.orElse("");
+        if (realUsername.isEmpty() && realProductName.isEmpty()) { return "redirect:/review/owner"; }
         Set<Review> reviews;
 
         // Determine what type of search to do
@@ -81,6 +84,7 @@ public class ReviewTemplate {
         model.addAttribute("reviews", reviews);
         model.addAttribute("username", realUsername);
         model.addAttribute("productName", realProductName);
+        model.addAttribute("reviewReq", new ReviewRequest());
         return "reviewSearch";
     }
 

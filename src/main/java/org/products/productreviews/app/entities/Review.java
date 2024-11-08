@@ -15,6 +15,7 @@ public class Review {
     @JoinColumn(name = "user_username")
     private Account account;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product")
     private Product product;
     @Enumerated(EnumType.STRING)
     private Star rating;
@@ -141,7 +142,7 @@ public class Review {
      */
     @Override
     public String toString() {
-        return "Review [reviewID=" + reviewID + "rating=" + rating.toString() + ", body=" + body + "]";
+        return "Review [reviewID=" + reviewID + ", rating=" + rating.toString() + ", body=" + body + "]";
     }
 
 

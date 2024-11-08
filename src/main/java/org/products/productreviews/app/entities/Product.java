@@ -29,9 +29,9 @@ public class Product {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER,
-            mappedBy = "product"
+            fetch = FetchType.EAGER
     )
+    @JoinColumn(name = "product")
     private Set<Review> reviews;
 
     /**

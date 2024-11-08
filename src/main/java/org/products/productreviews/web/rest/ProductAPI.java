@@ -65,7 +65,9 @@ public class ProductAPI {
      * @param reviewRequest The review request to turned into a review.
      * @return ResponseEntity indicating the result of the operation.
      */
+    //TODO: Rework all submitReviews to use request parameters so it can be mapped to one URL
     //TODO: may need to use @Transactional ?
+    //TODO: Id is not accessible from product
     @PostMapping("/{id}/submitReview")
     @ResponseBody
     public ResponseEntity<?> submitReview(@PathVariable("id") long productId, @RequestBody ReviewRequest reviewRequest) {
@@ -83,6 +85,28 @@ public class ProductAPI {
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product with id = " + productId + " not found");
         }
+    }
+
+    /**
+     * Submits a review for a product by its name;
+     *
+     * @param name Name of the product
+     * @param reviewRequest The review request to turned into a review.
+     * @return ResponseEntity indicating the result of the operation.
+     */
+    //TODO: may need to use @Transactional ?
+    @PostMapping("/{name}/submitReviewByName")
+    @ResponseBody
+    public ResponseEntity<?> submitReviewByProductName(@PathVariable("name") String name, @ModelAttribute ReviewRequest reviewRequest) {
+        Product product = productRepo.findByName(name);
+        //TODO: Replace "null" with the current account. Spring Security can get the Current Account
+        Review review = reviewRequest.toReview(null);
+        product.addReview(review);
+        //TODO: Get current account, add review to current account, save account
+
+        // Product will save review by cascade
+        productRepo.save(product);
+        return ResponseEntity.ok("Review added successfully");
     }
 
 
