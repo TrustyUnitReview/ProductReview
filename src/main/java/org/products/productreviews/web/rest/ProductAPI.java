@@ -1,9 +1,11 @@
 package org.products.productreviews.web.rest;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.web.request.ReviewRequest;
+import org.products.productreviews.web.util.WebUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -90,14 +92,18 @@ public class ProductAPI {
     /**
      * Submits a review for a product by its name;
      *
+     * @param request HttpServletRequest reference
      * @param name Name of the product
      * @param reviewRequest The review request to turned into a review.
      * @return ResponseEntity indicating the result of the operation.
      */
     //TODO: may need to use @Transactional ?
     @PostMapping("/{name}/submitReviewByName")
-    @ResponseBody
-    public ResponseEntity<?> submitReviewByProductName(@PathVariable("name") String name, @ModelAttribute ReviewRequest reviewRequest) {
+    String submitReviewByProductName(
+            HttpServletRequest request,
+            @PathVariable("name") String name,
+            @ModelAttribute ReviewRequest reviewRequest) {
+
         Product product = productRepo.findByName(name);
         //TODO: Replace "null" with the current account. Spring Security can get the Current Account
         Review review = reviewRequest.toReview(null);
@@ -106,7 +112,7 @@ public class ProductAPI {
 
         // Product will save review by cascade
         productRepo.save(product);
-        return ResponseEntity.ok("Review added successfully");
+        return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
     }
 
 

@@ -2,7 +2,7 @@ package org.products.productreviews.web.rest;
 
 import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Account;
-import org.products.productreviews.web.patcher.Patcher;
+import org.products.productreviews.web.util.patcher.Patcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

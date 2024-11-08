@@ -3,7 +3,7 @@ package org.products.productreviews.web.rest;
 import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ReviewRepository;
-import org.products.productreviews.web.patcher.Patcher;
+import org.products.productreviews.web.util.patcher.Patcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

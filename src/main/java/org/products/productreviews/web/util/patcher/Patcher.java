@@ -1,4 +1,4 @@
-package org.products.productreviews.web.patcher;
+package org.products.productreviews.web.util.patcher;
 
 import org.springframework.stereotype.Component;
 
