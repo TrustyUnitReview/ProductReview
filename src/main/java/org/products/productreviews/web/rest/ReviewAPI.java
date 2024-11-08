@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
+/**
+ * REST controller for manipulating Reviews
+ */
 @RestController
 @RequestMapping("review")
 public class ReviewAPI {

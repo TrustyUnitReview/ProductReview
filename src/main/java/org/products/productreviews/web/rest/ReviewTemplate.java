@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * Controller that returns templates to the View that are related to Review.
+ */
 @Controller
 @RequestMapping("/review")
 public class ReviewTemplate {

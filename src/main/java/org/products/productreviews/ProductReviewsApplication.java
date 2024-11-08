@@ -20,6 +20,14 @@ public class ProductReviewsApplication {
     }
 
     // TODO: REMOVE WHEN NOT NEEDED
+
+    /**
+     * Runner that will create products for using the application.
+     * Ideally this is done through a View and by the request of a user, this method exists to bridge the gap between
+     * now and when this feature is finished.
+     * @param productRepository Autowired product repository
+     * @return CommandLineRunner
+     */
     @Bean
     CommandLineRunner commandLineRunner(ProductRepository productRepository) {
         return args ->  {

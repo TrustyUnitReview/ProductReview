@@ -32,10 +32,6 @@ public class Review {
 
     // Getters and Setters
 
-    public Account getOwner() {
-        return account;
-    }
-
     public String getBody() {
         return body;
     }
@@ -57,6 +53,8 @@ public class Review {
     public void setBody(String body) {this.body = body;}
 
     public void setRating(Star rating) {this.rating = rating;}
+
+    public void setAccount(Account account) {this.account = account;}
 
     /**
      * Indicates whether some other object is "equal to" this one.
