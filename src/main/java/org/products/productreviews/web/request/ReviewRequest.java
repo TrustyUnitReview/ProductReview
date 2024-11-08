@@ -8,6 +8,14 @@ public class ReviewRequest {
 
     private String body;
     private String rating;
+
+    private Review.Star parseRating(){
+        if (rating.chars().allMatch( Character::isDigit )){
+            return Review.Star.fromInt(Integer.parseInt(rating));
+        } else {
+            return Review.Star.valueOf(rating);
+        }
+    }
     
     public ReviewRequest(){}
 
@@ -26,7 +34,7 @@ public class ReviewRequest {
     public Review toReview(Account account) {
         Review review = new Review();
         review.setBody(body);
-        review.setRating(Review.Star.fromInt(Integer.parseInt(rating)));
+        review.setRating(parseRating());
         return review;
     }
 

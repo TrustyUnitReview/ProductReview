@@ -23,9 +23,8 @@ public class Review {
 
     public Review() {}
 
-    public Review(Account owner, Product product, String reviewBody, Star rating){
+    public Review(Account owner, String reviewBody, Star rating){
         this.account = owner;
-        this.product = product;
         this.body = reviewBody;
         this.rating = rating;
     }
@@ -172,7 +171,6 @@ public class Review {
                 default -> null;
             };
         }
-
 
         /**
          * Returns the name of this enum constant, as contained in the

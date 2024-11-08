@@ -37,6 +37,9 @@ public class ReviewRepositoryTest {
         reviewRepository.deleteAll();
     }
 
+    /**
+     * Tests retrieving Reviews by ID
+     */
     @Test
     void testGetByID(){
         Review review = reviewRepository.findById(1L).orElseThrow();
