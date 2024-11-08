@@ -22,6 +22,7 @@
         <div class="card-body">
           <img th:if="${product.image == null}" th:src="@{/images/placeholder.jpg}" src="../static/images/placeholder.jpg" class="card-img-bottom mb-2" alt="Placeholder">
           <h5 class="card-title" th:text="|${product.name}|">Product Name</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span></h6>
           <p class="card-text" th:text="|${product.description}|">Description</p>
           <a th:href="'/review/search?productName=' + ${product.getName()}" class="btn btn-primary">View</a>
         </div>
