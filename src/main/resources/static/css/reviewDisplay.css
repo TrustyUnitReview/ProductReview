@@ -9,6 +9,10 @@
     transition: 1s;
 }
 
+.fixed-width-card {
+    height: 100%;
+}
+
 .review:hover {
     transform: scale(1.01);
     background: wheat;

@@ -19,14 +19,36 @@ public class ProductReviewsApplication {
         SpringApplication.run(ProductReviewsApplication.class, args);
     }
 
-    // REMOVE WHEN NOT NEEDED
+    // TODO: REMOVE WHEN NOT NEEDED
     @Bean
     CommandLineRunner commandLineRunner(ProductRepository productRepository) {
-        return args -> Product.createProduct(productRepository,
-                "Fountain Pen",
+        return args ->  {
+            Product example = Product.createProduct(productRepository,
+                "FountainPen",
                 399.99f,
                 "A Fountain Pen",
                 null);
+            Product example1 = Product.createProduct(productRepository,
+                    "FountainPen2",
+                    399.99f,
+                    "A Fountain Pen",
+                    null);
+            Product example2 = Product.createProduct(productRepository,
+                    "FountainPen3",
+                    399.99f,
+                    "A FountainPen",
+                    null);
+            Product example3 = Product.createProduct(productRepository,
+                    "FountainPen4",
+                    399.99f,
+                    "A Fountain Pen",
+                    null);
+            productRepository.save(example);
+            productRepository.save(example1);
+            productRepository.save(example2);
+            productRepository.save(example3);
+
+        };
     }
 
 }

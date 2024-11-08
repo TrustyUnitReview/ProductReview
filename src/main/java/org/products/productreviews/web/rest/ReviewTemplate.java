@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -81,7 +79,13 @@ public class ReviewTemplate {
             reviews = searchByUsername(realUsername);
         }
 
-        model.addAttribute("reviews", reviews);
+        // Make sure reviews always display in some sort of consistent order.
+        // Sets are unordered by nature
+        ArrayList<Review> sortedReviews = reviews.stream()
+                .sorted(Comparator.comparing(Review::getReviewID))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        model.addAttribute("reviews", sortedReviews);
         model.addAttribute("username", realUsername);
         model.addAttribute("productName", realProductName);
         model.addAttribute("reviewReq", new ReviewRequest());
