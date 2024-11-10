@@ -39,6 +39,8 @@ See the [open issues](https://github.com/TrustyUnitReview/ProductReview/issues) 
 
 ## License 
 
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
 ## Acknowledgments
 
 Project description can be found here:
