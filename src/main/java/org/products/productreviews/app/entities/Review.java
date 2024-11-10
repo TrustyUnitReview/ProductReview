@@ -11,7 +11,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long reviewID;
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "TEXT")
     private String body;
     @ManyToOne
     @JoinColumn(name = "user_username")
