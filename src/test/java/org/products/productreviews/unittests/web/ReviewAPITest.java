@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.app.repositories.ReviewRepository;
+import org.products.productreviews.unittests.security.TestSecurityConfig;
 import org.products.productreviews.web.rest.ReviewAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
+@Import(TestSecurityConfig.class)
 @WebMvcTest(ReviewAPI.class)
 class ReviewAPITest {
 
