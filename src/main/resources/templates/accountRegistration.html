@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+</head>
+<body>
+<h2>Register</h2>
+
+<!-- Display error message if present -->
+<div style="color: red;">
+    <p th:if="${error}" th:text="${error}"></p>
+</div>
+
+<!-- Display success message if present -->
+<div style="color: green;">
+    <p th:if="${success}" th:text="${success}"></p>
+</div>
+
+<form action="/register" method="post">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" required minlength="3" maxlength="20"><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required
+           minlength="8"
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+           title="Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character."><br><br>
+
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

@@ -12,9 +12,8 @@ import java.util.Set;
 @Entity
 public class Account {
     @Id
-    @Column(name="user_username")
+    @Column(name="user_username", unique = true) //TODO: idk if this unique key needs to be here
     private String username;
-    // TODO: Replace this unsafe string store with a true authentication method
     private String password;
 
     @ManyToMany
@@ -54,20 +53,6 @@ public class Account {
     }
 
     /**
-     * Format checks for password, throws error with rationale if a format check failed.
-     * Hands control back to caller otherwise.
-     * Limitation: Will only return the first error, unless we implement a string builder for the error message
-     * (which is feasible).
-     *
-     * @param password The password to check for format validity.
-     *
-     * @throws InvalidFormatException If the username provided is in an invalid format
-     */
-    private static void checkPasswordFormat(String password) throws InvalidFormatException {
-        // TODO: Implement sanitation rules, throw exceptions for usernames outside of them.
-    }
-
-    /**
      * Input sanitation for user creation.
      * Factory should be main (exclusive?) way to create users.
      *
@@ -87,11 +72,18 @@ public class Account {
             throw new InvalidKeyException("Username already exists");
         }
         // Will throw error and stop if format check fails
-        checkUsernameFormat(username);
-        // Will throw error and stop if format check fails
-        checkPasswordFormat(password);
+        checkUsernameFormat(username); //TODO: what is the format check?
+
+
 
         return new Account(username, password);
+    }
+
+    /**
+     * @return Password of this account
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -111,6 +103,8 @@ public class Account {
     /**
      * @return Username of this account
      */
-    public String getUsername() {return username;}
+    public String getUsername() {
+        return username;
+    }
 
 }

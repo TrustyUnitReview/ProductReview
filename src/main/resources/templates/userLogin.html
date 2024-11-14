@@ -5,6 +5,19 @@
     <title>User Login</title>
 </head>
 <body>
-User login here
+<form action="/login" method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required />
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required />
+
+    <button type="submit">Login</button>
+
+    <!-- Display error message if login fails -->
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+</form>
 </body>
 </html>

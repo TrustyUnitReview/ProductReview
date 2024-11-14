@@ -1,5 +1,6 @@
 package org.products.productreviews.web.rest;
 
+import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
@@ -107,7 +108,14 @@ public class ReviewTemplate {
      * @return All the Reviews under the Account
      */
     private Set<Review> searchByUsername(String uName) {
-        return accountRepo.findByUsername(uName).getReviews();
+        Optional<Account> account = accountRepo.findByUsername(uName);
+        if (account.isEmpty()) {
+            return new HashSet<>();
+        }else{
+            return account.get().getReviews();
+        }
+
+        //return accountRepo.findByUsername(uName).getReviews();
     }
 
     /**
