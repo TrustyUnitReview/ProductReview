@@ -3,7 +3,6 @@ package org.products.productreviews.app.entities;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
-
 import javax.management.openmbean.InvalidKeyException;
 import java.util.HashSet;
 import java.util.Set;

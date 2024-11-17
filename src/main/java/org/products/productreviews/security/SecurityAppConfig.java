@@ -1,5 +1,6 @@
 package org.products.productreviews.security;
 
+import org.products.productreviews.app.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,21 +21,16 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityAppConfig {
 
     @Autowired
-    private CustomAuthenticationProvider authProvider;
+    AccountService accountService;
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authProvider);
-        return authenticationManagerBuilder.build();
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() throws Exception {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user").password("password").roles("USER").build());
-        return manager;
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("username").password("password");
+        auth.userDetailsService(accountService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     /**
@@ -47,15 +43,14 @@ public class SecurityAppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        //Allows any request to /login or /registration and any other authenticated request
-                        .requestMatchers("/login").permitAll()
+                        //Allows any request to /registration and /login as well as any other authenticated request
                         .requestMatchers("/registration").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
-                ).httpBasic(Customizer.withDefaults())
-                //Redirects to "/" on successful login TODO: Route to dashboard
-                .formLogin(form -> form.defaultSuccessUrl("/dashboard", true));
-                //Redirects to log in after successful logout
-                //.logout(logout -> logout.logoutSuccessUrl("/login"));
+                )
+                //.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard", true))
+                .logout(config -> config.logoutSuccessUrl("/login"));
 
         return http.build();
     }
