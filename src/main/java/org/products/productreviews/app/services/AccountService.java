@@ -12,15 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-//@Service
+@Service
 public class AccountService implements UserDetailsService {
 
-    //@Autowired
+    @Autowired
     private AccountRepository accountRepo;
-
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepo = accountRepository;
-    }
 
     /**
      * Loads specific user details by username during authentication
