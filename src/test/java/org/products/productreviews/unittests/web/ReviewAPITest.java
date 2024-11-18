@@ -3,6 +3,7 @@ package org.products.productreviews.unittests.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Review;
+import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.unittests.security.TestSecurityConfig;
@@ -36,6 +37,9 @@ class ReviewAPITest {
     //TODO: Delete when CommandlineRunner is deleted
     @MockBean
     ProductRepository productRepository;
+
+    @MockBean
+    AccountRepository accountRepository;
 
     /**
      * Tests editing existing reviews
