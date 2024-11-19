@@ -18,6 +18,7 @@ public class Product {
     @Column(unique=true)
     private String name;
     private float price;
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     // Cannot store Image or Path objects directly, required to store string to load later
     private String imagePath;
