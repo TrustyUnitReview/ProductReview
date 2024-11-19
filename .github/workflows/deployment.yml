@@ -60,4 +60,9 @@ jobs:
           app-name: 'ProductReview'
           slot-name: 'Production'
           package: '*.jar'
+
+      - name: Delete artifacts on completion
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: java-app
           
