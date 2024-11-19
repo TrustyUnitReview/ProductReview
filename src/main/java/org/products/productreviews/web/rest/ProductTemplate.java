@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+/**
+ * Controller that returns templates to the View that are related to Product.
+ */
 @Controller
 @RequestMapping("/product")
 public class ProductTemplate {
@@ -22,6 +25,12 @@ public class ProductTemplate {
 
     ProductTemplate(ProductRepository productRepository) {productRepo = productRepository;}
 
+    /**
+     * Returns information about a specific product suitable for the show product template.
+     * @param pName The product's unique name
+     * @param model The Model
+     * @return The showProduct template
+     */
     @GetMapping("/show")
     String getProductPage(@RequestParam(name="productName") String pName, Model model){
         Product product = productRepo.findByName(pName);
