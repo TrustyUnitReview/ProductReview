@@ -61,7 +61,8 @@ jobs:
           slot-name: 'Production'
           package: '*.jar'
 
-      - uses: geekyeggo/delete-artifact@v5
+      - name: Delete artifacts on completion
+        uses: geekyeggo/delete-artifact@v5
         with:
           name: java-app
           
