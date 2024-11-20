@@ -6,6 +6,10 @@
     background-color: ghostwhite;
 }
 
+.ghostwhite-bg-col {
+    background-color: ghostwhite;
+}
+
 body {
     min-height: 100vh;
     margin: 0;
