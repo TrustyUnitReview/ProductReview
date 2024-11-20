@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.logging.Logger;
 
@@ -33,7 +35,8 @@ public class ProductReviewsApplication {
     @Bean
     CommandLineRunner commandLineRunner(ProductRepository productRepository, AccountRepository accountRepository) {
         return args ->  {
-            Account admin = Account.createAccount(accountRepository, "username", "password");
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            Account admin = Account.createAccount(accountRepository, "username", passwordEncoder.encode("password"));
             accountRepository.save(admin);
             Product example = Product.createProduct(productRepository,
                 "FountainPen",
