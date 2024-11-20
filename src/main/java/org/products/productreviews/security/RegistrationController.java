@@ -6,9 +6,17 @@ import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.entities.DTOs.AccountCreationDTO;
 import org.products.productreviews.app.repositories.AccountRepository;
+import org.products.productreviews.app.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +36,11 @@ public class RegistrationController {
 
     @Autowired
     private AccountRepository accountRepo;
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
+//    @Autowired
+//    private AccountService accountService;
+
 
     @GetMapping("/registration")
     public String register(Model model) {
@@ -38,7 +51,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String register(Model model, @Valid @ModelAttribute AccountCreationDTO accountCreationDTO, BindingResult result) {
+    public String register(Model model, @Valid @ModelAttribute AccountCreationDTO accountCreationDTO, BindingResult result) { //TODO: I don't think we need the client side validation if we have this
         var passwordEncoder = new BCryptPasswordEncoder();
 
         if (!accountCreationDTO.getPassword().equals(accountCreationDTO.getConfirmPassword())) {
@@ -51,12 +64,23 @@ public class RegistrationController {
         }
 
         if (result.hasErrors()) {
-            return "accountRegistration";
+            model.addAttribute("Hello World");
+            return "accountRegistration"; //TODO: change to display errors, have error message on page
         }
 
         try {
             String password = passwordEncoder.encode(accountCreationDTO.getPassword());
-            Account.createAccount(accountRepo, accountCreationDTO.getUsername(), password);
+            Account acc = Account.createAccount(accountRepo, accountCreationDTO.getUsername(), password);
+            accountRepo.save(acc);
+
+//            //authenticate user
+//            UsernamePasswordAuthenticationToken authenticationToken =
+//                    new UsernamePasswordAuthenticationToken(accountCreationDTO.getUsername(), password);
+//
+//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+//
+//            //Step 3: Set the authentication in the SecurityContext
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
 
             model.addAttribute("accountCreationDTO", new AccountCreationDTO());
             model.addAttribute("success", true);
@@ -65,7 +89,7 @@ public class RegistrationController {
             result.addError(new FieldError("accountCreationDTO", "username", e.getMessage()));
         }
 
-        return "accountRegistration";
+        return "redirect:/login";
     }
 
     @PostMapping("/login")
