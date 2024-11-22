@@ -25,7 +25,7 @@ class AccountTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Account validAccount = Account.createAccount(repo,"testUser1", "p1");
+        Account validAccount = Account.createAccount(repo,"testUser1", "MyPassword1!");
         repo.save(validAccount);
     }
 
@@ -44,7 +44,7 @@ class AccountTest {
     @Test
     void createUserValid() throws Exception {
         // Test valid user creation cases
-        Account validAccount = Account.createAccount(repo, "newUser", "pass1");
+        Account validAccount = Account.createAccount(repo, "newUser", "MyPassword1!");
     }
 
     /**
@@ -57,7 +57,7 @@ class AccountTest {
         // Checks the expected exception is thrown
         assertThrows(InvalidKeyException.class, () ->
         {
-            Account.createAccount(repo, "testUser1", "pass2");}
+            Account.createAccount(repo, "testUser1", "MyPassword2!");}
         );
     }
 

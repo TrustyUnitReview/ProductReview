@@ -25,7 +25,7 @@ public class ReviewRepositoryTest {
 
     @BeforeEach
     void setUpBeforeClass() throws InvalidFormatException {
-        Account account = Account.createAccount(accountRepository, "uName", "pWord");
+        Account account = Account.createAccount(accountRepository, "uName", "MyPassword1!");
         Review review = new Review(account, "Body", Review.Star.THREE);
         accountRepository.save(account);
         reviewRepository.save(review);

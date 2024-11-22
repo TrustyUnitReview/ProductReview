@@ -91,7 +91,7 @@ public class ProductAPITest {
     @Test
     void testDisplayProductReviews() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
         product.addReview(review);
 
@@ -126,7 +126,7 @@ public class ProductAPITest {
     @Test
     void testSubmitValidReview() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
@@ -149,7 +149,7 @@ public class ProductAPITest {
      */
     @Test
     void testSubmitInvalidReview() throws Exception {
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account, "Test Review Description", Review.Star.FIVE);
 
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
