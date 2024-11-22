@@ -11,15 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * UserDetailsService interface abstracts the retrieval of user details for Spring Security's authentication process
+ */
 @Service
 public class AccountService implements UserDetailsService {
 
     @Autowired
     private AccountRepository accountRepo;
-
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepo = accountRepository;
-    }
 
     /**
      * Loads specific user details by username during authentication
@@ -32,7 +31,7 @@ public class AccountService implements UserDetailsService {
         Optional<Account> account = accountRepo.findByUsername(username);
         if (account.isPresent()) {
             var accountObj = account.get();
-            return User.builder()
+            return User.builder() //returns a UserDetails object, populated with the username and hashed password
                     .username(accountObj.getUsername())
                     .password(accountObj.getPassword())
                     .build();
@@ -40,4 +39,5 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
     }
+
 }

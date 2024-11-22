@@ -1,20 +1,17 @@
 package org.products.productreviews.security;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.management.openmbean.InvalidKeyException;
-import java.util.Arrays;
-import java.util.logging.Level;
+import java.util.Optional;
 
 @Controller
 public class RegistrationController {
@@ -22,23 +19,37 @@ public class RegistrationController {
     @Autowired
     private AccountRepository accountRepo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
-    public String showAccountRegistrationPage() {
+    public String register(Model model) {
         return "accountRegistration";
     }
 
-    @GetMapping("/")
-    public String accountLogin(Model model) {
-        return "userLogin"; // Login form
+    @PostMapping("/registration")
+    public String register(Model model, @RequestParam String username, @RequestParam String password) { //TODO: I don't think we need the client side validation if we have this
+        var passwordEncoder = new BCryptPasswordEncoder();
+
+        Optional<Account> account = accountRepo.findByUsername(username);
+        if (account.isPresent()) {
+            model.addAttribute(new FieldError("username", "username", "Username is already in use"));
+        }
+
+        try {
+            String passwordCoded = passwordEncoder.encode(password);
+            Account acc = Account.createAccount(accountRepo, username, passwordCoded);
+            accountRepo.save(acc);
+
+        } catch (Exception e) {
+            model.addAttribute(new FieldError("accountCreationDTO", "username", e.getMessage()));
+        }
+
+        return "redirect:/login";
     }
 
     @PostMapping("/login")
     public String accountLogin(@RequestParam String username, @RequestParam String password, Model model) {
         Account account = accountRepo.findByUsername(username).orElse(null);
-        if (account != null && passwordEncoder.matches(password, account.getPassword())) {
+        if (account != null && account.getPassword().equals(password)) {
             model.addAttribute("user", account);
             return "redirect:/dashboard"; // Redirect to home page
         } else {
@@ -46,31 +57,5 @@ public class RegistrationController {
             return "userLogin"; // Reload login page with error message
         }
     }
-
-    @PostMapping("/registration")
-    public String registerAccount(@RequestParam String username,
-                                  @RequestParam String password,
-                                  Model model) {
-        try {
-
-            Account newAccount = Account.createAccount(accountRepo, username, passwordEncoder.encode(password));
-            accountRepo.save(newAccount);
-            model.addAttribute("newAccount", newAccount);
-            model.addAttribute("success", "Account created successfully.");
-            //ProductReviewsApplication.LOGGER.log(Level.INFO, "New account created: " + newAccount.getUsername());
-            return "redirect:/"; // Redirect to login page
-        } catch (InvalidKeyException e) { //TODO: this isn't being caught
-            // Handle existing username error
-            model.addAttribute("error", "Username already exists. Please choose a different one.");
-            return "accountRegistration"; // Reload registration form with error message
-
-        } catch (InvalidFormatException e) {
-            // Handle username/password format errors
-            model.addAttribute("error", "Invalid username or password format: " + e.getMessage());
-            return "accountRegistration"; // Reload registration form with error message
-        }
-    }
-
-
 
 }
