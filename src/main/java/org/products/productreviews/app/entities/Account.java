@@ -3,6 +3,7 @@ package org.products.productreviews.app.entities;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.management.openmbean.InvalidKeyException;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.Set;
 @Entity
 public class Account {
     @Id
-    @Column(name="user_username", unique = true) //TODO: idk if this unique key needs to be here
+    @Column(name="user_username", unique = true)
     private String username;
     private String password;
 
@@ -41,39 +42,65 @@ public class Account {
      * Format checks for username, throws error with rationale if a format check failed.
      * Hands control back to caller otherwise.
      * Limitation: Will only return the first error, unless we implement a string builder for the error message
-     * (which is feasible).
-     *
+     * (which is feasible)
      * @param username The username to check for format validity.
-     *
-     * @throws InvalidFormatException If the username provided is in an invalid format
+     * @throws IllegalArgumentException If the username provided is in an invalid format
      */
-    private static void checkUsernameFormat(String username) throws InvalidFormatException {
-        // TODO: Implement sanitation rules, throw exceptions for usernames outside of them.
+    private static void checkUsernameFormat(String username) throws IllegalArgumentException {
+        if (username.length() < 3 || username.length() > 20) {
+            throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
+        }
+        if (!username.matches("^[a-zA-Z0-9]*$")) {
+            throw new IllegalArgumentException("Username can only contain alphanumeric characters");
+        }
+        if (username.contains(" ")) {
+            throw new IllegalArgumentException("Username cannot contain spaces");
+        }
     }
 
     /**
-     * Input sanitation for user creation.
-     * Factory should be main (exclusive?) way to create users.
-     *
+     * Format checks for password, throws error with rationale if a format check failed
+     * @param password The password to check for format validity.
+     * @throws IllegalArgumentException If the password provided is in an invalid format
+     */
+    private static void checkPasswordFormat(String password) throws IllegalArgumentException {
+        if (password.length() < 8 || password.length() > 20) {
+            throw new IllegalArgumentException("Password must be between 8 and 20 characters long");
+        }
+        if (!password.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("Password must contain at least one digit");
+        }
+        if (!password.matches(".*[a-z].*")) {
+            throw new IllegalArgumentException("Password must contain at least one lowercase letter");
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            throw new IllegalArgumentException("Password must contain at least one uppercase letter");
+        }
+        if (!password.matches(".*[\\W_].*")) {
+            throw new IllegalArgumentException("Password must contain at least one special character");
+        }
+    }
+
+    /**
+     * Input sanitation for user creation and encoding of password.
      * @param repo The user repository, instantiated through DI.
      * @param username A string username, should be (input sanitation rules here)
      * @param password A string password to match against for authentication.
-     *
      * @throws InvalidKeyException If the username provided already exists.
-     * @throws InvalidFormatException If the username or password provided is in an invalid format.
-     *
+     * @throws IllegalArgumentException If the username or password provided is in an invalid format.
      * @return The new user created.
      */
     public static Account createAccount(AccountRepository repo, String username, String password) throws InvalidKeyException, InvalidFormatException {
-        // Can we access the repo without it being a param? We seem to access it through DI atm.
-        // I don't think so, but I might be missing something.
+
         if (repo.existsByUsername(username)){
             throw new InvalidKeyException("Username already exists");
         }
-        // Will throw error and stop if format check fails
-        checkUsernameFormat(username); //TODO: what is the format check?
-
-
+        //throws IllegalArgumentException if username or password is invalid
+        checkUsernameFormat(username);
+        checkPasswordFormat(password);
+        //if all checks pass, encode the password and create new Account
+        var passwordEncoder = new BCryptPasswordEncoder();
+        password = passwordEncoder.encode(password);
 
         return new Account(username, password);
     }

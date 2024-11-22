@@ -21,10 +21,11 @@ public class AccountService implements UserDetailsService {
     private AccountRepository accountRepo;
 
     /**
-     * Loads specific user details by username during authentication
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
+     * Loads specific user details by username during authentication.
+     * When a user tries to authenticate, this method receives the username, searches the database for a record containing it, and returns a UserDetails object.
+     * @param username username of the user
+     * @return UserDetails object
+     * @throws UsernameNotFoundException if the username is not found in the database
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

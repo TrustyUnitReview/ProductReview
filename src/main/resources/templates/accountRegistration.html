@@ -19,13 +19,20 @@
 
 <form th:action="@{/registration}" method="post">
     <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required minlength="3" maxlength="20"><br><br>
+    <input type="text" id="username" name="username" required
+           minlength="3"
+           maxlength="20"
+           pattern="[a-zA-Z0-9]+"
+           title="Username must be between 3 and 20 characters long and
+           contain only letters and numbers."><br><br>
 
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" required
            minlength="8"
+           maxlength="20"
            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
-           title="Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character."><br><br>
+           title="Password must be at least 8 characters long, contain an uppercase letter,
+           a lowercase letter, a digit, and a special character."><br><br>
 
     <button type="submit">Register</button>
 </form>

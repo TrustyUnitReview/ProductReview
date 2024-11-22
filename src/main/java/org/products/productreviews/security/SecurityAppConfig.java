@@ -10,10 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configures security rules for the application
+ */
 @Configuration
 @EnableWebSecurity //enables Spring Security filters to the application's web requests
 public class SecurityAppConfig {
-
     @Autowired
     private AccountService userDetailsService;
 
@@ -21,9 +23,9 @@ public class SecurityAppConfig {
      * Configures security rules for HTTP requests,
      * defines how requests are authorized,
      * and sets up form-based login and logout behavior
-     * @param http
-     * @return
-     * @throws Exception
+     * @param http HttpSecurity object
+     * @return SecurityFilterChain object
+     * @throws Exception if an error occurs during configuration
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,7 +35,8 @@ public class SecurityAppConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .defaultSuccessUrl("/dashboard", true) // configures a login form for user authentication
+                        .defaultSuccessUrl("/dashboard", true)
+                        .permitAll()// configures a login form for user authentication
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/login")); //configures logout functionality -> redirects users to /login page on successful output
 
@@ -43,7 +46,7 @@ public class SecurityAppConfig {
     /**
      * Provides a password encoder for the application,
      * uses BCrypt hashing function to encode passwords
-     * @return
+     * @return PasswordEncoder object
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
