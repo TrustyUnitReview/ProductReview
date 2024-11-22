@@ -16,8 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity //enables Spring Security filters to the application's web requests
 public class SecurityAppConfig {
-    @Autowired
-    private AccountService userDetailsService;
 
     /**
      * Configures security rules for HTTP requests,
