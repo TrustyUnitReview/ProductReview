@@ -15,11 +15,11 @@ import java.security.InvalidKeyException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ReviewTemplateTest {
+public class ProductTemplateTest {
 
     @MockBean
     private SecurityFilterChain securityFilterChain; //do not remove, required to disable security for this test
@@ -31,24 +31,13 @@ public class ReviewTemplateTest {
     ProductRepository productRepository;
 
     /**
-     * Tests the template that is returned when requesting the current user's reviews
-     */
-    @Test
-    void testShowOwnReviews(){
-        String template = restTemplate.getForObject("/review/owner", String.class);
-        String expected = "<div class=\"d-flex flex-column container review-container mt-5 p-2\">";
-        Pattern pattern = Pattern.compile(expected);
-
-        Matcher matcher = pattern.matcher(template);
-        assertTrue(matcher.find());
-    }
-
-    /**
      * Tests the template that is returned when requesting reviews for a product name
      * Looks for specific HTML elements
      */
     @Test
     void testShowReviewsForProduct() throws InvalidKeyException, InvalidFormatException {
+        Pattern productName = Pattern.compile("<h5 class=\"card-title\">FountainPenTest</h5>");
+        Pattern productDescription = Pattern.compile("<p class=\"card-text\">Description</p>");
         Pattern starPattern = Pattern.compile("<div class=\"displayStarFill\">★</div>");
         Pattern ownerPattern = Pattern.compile("<div class=\"me-3\">Review by: null</div>");
         Pattern formTitlePattern = Pattern.compile("<h5 class=\"card-title\">Leave a Review for FountainPenTest</h5>");
@@ -61,8 +50,15 @@ public class ReviewTemplateTest {
 
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
 
-        String template = restTemplate.getForObject("/review/search?productName=FountainPenTest", String.class);
-        Matcher matcher = starPattern.matcher(template);
+        String template = restTemplate.getForObject("/product/show?productName=FountainPenTest", String.class);
+
+        Matcher matcher = productName.matcher(template);
+        assertTrue(matcher.find());
+
+        matcher = productDescription.matcher(template);
+        assertTrue(matcher.find());
+
+        matcher = starPattern.matcher(template);
         assertTrue(matcher.find());
 
         matcher = ownerPattern.matcher(template);
@@ -70,7 +66,6 @@ public class ReviewTemplateTest {
 
         matcher = formTitlePattern.matcher(template);
         assertTrue(matcher.find());
-
     }
 
     /**
@@ -79,9 +74,10 @@ public class ReviewTemplateTest {
      */
     @Test
     void testShowReviewsForProductEmpty() throws InvalidKeyException, InvalidFormatException {
-        Pattern emptyStart = Pattern.compile("<div class=\"container row p-4\">");
-        Pattern empty = Pattern.compile("EMPTY");
-        Pattern emptyContainer = Pattern.compile("<div class=\"card text-center\">");
+        Pattern productName = Pattern.compile("<h5 class=\"card-title\">FountainPenTest</h5>");
+        Pattern productDescription = Pattern.compile("<p class=\"card-text\">Description</p>");
+        Pattern emptyStart = Pattern.compile("<div class=\"card text-center ghostwhite-bg-col\">");
+        Pattern empty = Pattern.compile("<h4>No Reviews Yet \uD83D\uDE1E</h4>");
         Pattern formTitlePattern = Pattern.compile("<h5 class=\"card-title\">Leave a Review for FountainPenTest</h5>");
 
         Product product = Product.createProduct(productRepository,
@@ -89,20 +85,22 @@ public class ReviewTemplateTest {
 
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
 
-        String template = restTemplate.getForObject("/review/search?productName=FountainPenTest", String.class);
-        Matcher matcher = emptyStart.matcher(template);
+        String template = restTemplate.getForObject("/product/show?productName=FountainPenTest", String.class);
+
+        Matcher matcher = productName.matcher(template);
+        assertTrue(matcher.find());
+
+        matcher = productDescription.matcher(template);
+        assertTrue(matcher.find());
+
+        matcher = emptyStart.matcher(template);
         assertTrue(matcher.find());
 
         matcher = empty.matcher(template);
         assertTrue(matcher.find());
 
-        matcher = emptyContainer.matcher(template);
-        assertTrue(matcher.find());
-
         matcher = formTitlePattern.matcher(template);
         assertTrue(matcher.find());
-
     }
-
 
 }
