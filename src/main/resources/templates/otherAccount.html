@@ -22,8 +22,18 @@
                 <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
             </div>
         </div>
-        <a class="navbar-brand" href="/dashboard">
-            <img th:src="@{/svg/account.svg}" src="../static/svg/account.svg" alt="Account" style="width: 30px; height: 30px">
+
+        <ul class="navbar-nav mx-2">
+            <li class="nav-item mx-2">
+                <a href="/login" class="btn btn-primary">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="/registration" class="btn btn-primary">Register</a>
+            </li>
+        </ul>
+
+        <a class="navbar-brand" href="/account/own">
+            <img th:src="@{/svg/account.svg}" src="../static/svg/account.svg" alt="Account" style="width: 32px; height: 32px">
         </a>
     </div>
 </nav>
@@ -76,6 +86,9 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
 <!-- FOOTER START -->
 <footer class="py-5">
     <div class="container">
@@ -98,6 +111,4 @@
 </footer>
 <!-- FOOTER END -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
 </html>
