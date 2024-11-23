@@ -2,16 +2,16 @@ package org.products.productreviews.web.rest;
 
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -39,10 +39,14 @@ public class AccountTemplate {
      */
     @GetMapping("/own")
     public String viewAccount(Model model) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Account account = accountRepo.findByUsername(authentication.getName());
-//        model.addAttribute("account", account);
-        return "selfAccount";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
+        if (account.isPresent()) {
+            model.addAttribute("account", account.get());
+            return "selfAccount";
+        } else {
+            return "redirect:/dashboard";
+        }
     }
 
     /**
@@ -54,16 +58,20 @@ public class AccountTemplate {
      */
     @GetMapping("/{username}")
     public String viewAccount(@PathVariable String username, Model model) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Account account = accountRepo.findByUsername(authentication.getName());
-//        model.addAttribute("account", account);
-//        if (username.equals(account.getUsername())) {
-//            return "redirect:/account/own";
-//        }
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
         Optional<Account> otherAccount = accountRepo.findByUsername(username);
-        model.addAttribute("otherAccount", otherAccount);
-        return "otherAccount";
-    }
 
+        if (account.isPresent() && otherAccount.isPresent()) {
+            model.addAttribute("account", account.get());
+            if (username.equals(account.get().getUsername())) {
+                return "redirect:/account/own";
+            }
+
+            model.addAttribute("otherAccount", otherAccount.get());
+            return "otherAccount";
+        } else {
+            return "redirect:/dashboard";
+        }
+    }
 }
