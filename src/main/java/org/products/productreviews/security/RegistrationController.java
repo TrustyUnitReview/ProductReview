@@ -37,7 +37,7 @@ public class RegistrationController {
      * @return error or success message and redirect to login page
      */
     @PostMapping("/registration")
-    public String register(Model model, @RequestParam String username, @RequestParam String password) { //TODO: I don't think we need the client side validation if we have this
+    public String register(Model model, @RequestParam String username, @RequestParam String password) {
         try {
             Account acc = Account.createAccount(accountRepo, username, password);
             accountRepo.save(acc);
@@ -54,18 +54,5 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
-
-//    @PostMapping("/login") //We are not using this, Spring has a built-in login page, delete if we don't need, and delete accountLogin.html
-//    @PostMapping("/login") //We are not using this, Spring has a built-in login page, delete if we don't need, and delete accountLogin.html
-//    public String accountLogin(@RequestParam String username, @RequestParam String password, Model model) {
-//        Account account = accountRepo.findByUsername(username).orElse(null);
-//        if (account != null && account.getPassword().equals(password)) {
-//            model.addAttribute("user", account);
-//            return "redirect:/dashboard"; // Redirect to home page
-//        } else {
-//            model.addAttribute("error", "Invalid username or password.");
-//            return "accountLogin"; // Reload login page with error message
-//        }
-//    }
 
 }
