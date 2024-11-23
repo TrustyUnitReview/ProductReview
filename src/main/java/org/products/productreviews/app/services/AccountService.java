@@ -3,6 +3,8 @@ package org.products.productreviews.app.services;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,5 +42,19 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
     }
+
+    /**
+     * Grabs the UserDetails object of the currently authenticated user
+     * @return UserDetails object
+     */
+    public UserDetails getCurrentUserObject() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            return (UserDetails) authentication.getPrincipal(); //return authentication.getName() if you just want name
+        }
+
+        return null; // Return null if no user is authenticated
+    }
+
 
 }
