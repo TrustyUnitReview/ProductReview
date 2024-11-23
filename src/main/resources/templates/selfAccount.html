@@ -6,5 +6,18 @@
 </head>
 <body>
 Show User Account
+
+<div> Name
+    <div th:text="|${account.username}|"></div>
+</div>
+<br>
+<div> Follow list
+    <div th:each="user : ${account.follows}" th:text="|${user.username}|"></div>
+</div>
+<br>
+
+<div> Reviews
+    <div th:each="review : ${account.reviews}" th:text="|${review.body}  ${review.rating.value}|"></div>
+</div>
 </body>
 </html>
