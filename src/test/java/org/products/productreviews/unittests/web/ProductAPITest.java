@@ -8,6 +8,7 @@ import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.app.repositories.ReviewRepository;
+import org.products.productreviews.unittests.security.TestSecurityConfig;
 import org.products.productreviews.web.rest.ProductAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,6 +30,7 @@ import java.util.Optional;
 /**
  * Unit tests for @ProductAPI controller
  */
+@Import(TestSecurityConfig.class)
 @WebMvcTest(ProductAPI.class)
 public class ProductAPITest {
 
@@ -88,7 +91,7 @@ public class ProductAPITest {
     @Test
     void testDisplayProductReviews() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
         product.addReview(review);
 
@@ -123,7 +126,7 @@ public class ProductAPITest {
     @Test
     void testSubmitValidReview() throws Exception {
         Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
@@ -146,7 +149,7 @@ public class ProductAPITest {
      */
     @Test
     void testSubmitInvalidReview() throws Exception {
-        Account account = Account.createAccount(accountRepository, "testUser", "pass1");
+        Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account, "Test Review Description", Review.Star.FIVE);
 
         when(productRepository.findById(1L)).thenReturn(Optional.empty());

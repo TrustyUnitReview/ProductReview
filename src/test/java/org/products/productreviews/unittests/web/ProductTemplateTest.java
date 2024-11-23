@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.InvalidKeyException;
 import java.util.regex.Matcher;
@@ -19,6 +20,9 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductTemplateTest {
+
+    @MockBean
+    private SecurityFilterChain securityFilterChain; //do not remove, required to disable security for this test
 
     @Autowired
     private TestRestTemplate restTemplate;

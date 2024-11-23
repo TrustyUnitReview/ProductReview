@@ -21,7 +21,7 @@ class AccountRepositoryTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Account validAccount = Account.createAccount(repo,"testUser1", "p1");
+        Account validAccount = Account.createAccount(repo,"testUser1", "MyPassword1!");
         repo.save(validAccount);
     }
 

@@ -1,25 +1,20 @@
 package org.products.productreviews.web.rest;
 
-import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-
-import java.util.Arrays;
 
 @Controller
 @RequestMapping("/account")
 public class AccountTemplate {
     // TODO: Inspect this, is there a better way to do this?
     //  Removing repo from createUser would fix the issue at the root.
-    @Autowired
-    private AccountRepository repo;
+    //TODO: I think we should create a security folder and move all security related classes there
 
+    @Autowired
+    private AccountRepository accountRepo;
 
     @GetMapping("/{id}")
     public String viewAccount(@PathVariable long id, Model model){
@@ -30,31 +25,4 @@ public class AccountTemplate {
         //TODO: if the current user is NOT authenticated, show different template
     }
 
-    @GetMapping("/reg")
-    public String accountRegistration(Model model) {
-        // TODO: Add input for username, password
-        try{
-            model.addAttribute("newUser", Account.createAccount(repo, "username", "password"));
-        }
-        catch (Exception e){
-            // TODO: Better error handler, have a way to retry registration? -> Different behavior based on type?
-            System.out.println(Arrays.toString(e.getStackTrace()));
-        }
-        return "userRegistration";
-    }
-
-    @GetMapping("/login")
-    public String accountLogin(Model model, Account account) {
-        model.addAttribute("user", account);
-        return "userLogin";
-    }
-
-    @PostMapping("/reg")
-    public String registerAccount(Model model, Account account) {
-        //encrypt account password
-        //userRepo.save(account)
-        model.addAttribute("user", account);
-        //TODO: make a home endpoint and page
-        return "redirect:/";
-    }
 }

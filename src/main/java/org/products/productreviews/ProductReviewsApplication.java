@@ -1,6 +1,8 @@
 package org.products.productreviews;
 
+import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.entities.Product;
+import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,8 +31,10 @@ public class ProductReviewsApplication {
      * @return CommandLineRunner
      */
     @Bean
-    CommandLineRunner commandLineRunner(ProductRepository productRepository) {
+    CommandLineRunner commandLineRunner(ProductRepository productRepository, AccountRepository accountRepository) {
         return args ->  {
+            Account admin = Account.createAccount(accountRepository, "username", "MyPassword1!");
+            accountRepository.save(admin);
             Product example = Product.createProduct(productRepository,
                 "FountainPen",
                 399.99f,
