@@ -6,6 +6,7 @@ import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
+import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.web.rest.AccountAPI;
 import org.products.productreviews.web.rest.AccountTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.InvalidKeyException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,17 +43,20 @@ public class AccountTemplateTest {
     @MockBean
     AccountRepository accountRepository;
 
+    @MockBean ProductRepository productRepository;
+
     /**
      * Tests the template that is returned when requesting reviews for a product name
      * Looks for specific HTML elements
      */
     @Test
+    @WithMockUser(username = "user", password = "Password1!")
     void testShowOtherAccount() throws Exception {
-        Account account = Account.createAccount(accountRepository, "user", "user");
-        Account otherAccount = Account.createAccount(accountRepository, "test", "test");
+        Account account = Account.createAccount(accountRepository, "user", "Password1!");
+        Account otherAccount = Account.createAccount(accountRepository, "test", "Password1!");
 
-        when(accountRepository.findByUsername("user")).thenReturn(account);
-        when(accountRepository.findByUsername("test")).thenReturn(otherAccount);
+        when(accountRepository.findByUsername("user")).thenReturn(Optional.of(account));
+        when(accountRepository.findByUsername("test")).thenReturn(Optional.of(otherAccount));
 
         mockMvc.perform(get("/account/test"))
                 .andDo(print())
@@ -57,8 +64,5 @@ public class AccountTemplateTest {
                 .andExpect(view().name("otherAccount"))
                 .andExpect(model().attribute("account", account))
                 .andExpect(model().attribute("otherAccount", otherAccount));
-
-
     }
-
 }
