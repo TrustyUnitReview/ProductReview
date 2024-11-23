@@ -1,7 +1,5 @@
 package org.products.productreviews.security;
 
-import org.products.productreviews.app.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +27,7 @@ public class SecurityAppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests //URL authorization
-                        .requestMatchers("/login", "/registration", "/registration-form").permitAll()
+                        .requestMatchers("/login", "/registration").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

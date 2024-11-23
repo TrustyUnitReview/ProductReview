@@ -1,6 +1,5 @@
 package org.products.productreviews.unittests.app.entities;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +12,12 @@ import javax.management.openmbean.InvalidKeyException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Tests for the Account entity
+ */
 @SpringBootTest
 class AccountTest {
+
     @Autowired
     private AccountRepository repo;
 
@@ -42,9 +44,9 @@ class AccountTest {
      * If an exception is thrown, test will fail!
      */
     @Test
-    void createUserValid() throws Exception {
+    void createUserValid() {
         // Test valid user creation cases
-        Account validAccount = Account.createAccount(repo, "newUser", "MyPassword1!");
+        assertDoesNotThrow(() -> Account.createAccount(repo, "newUser", "MyPassword1!"));
     }
 
     /**
@@ -53,13 +55,86 @@ class AccountTest {
      * Other exceptions fail it.
      */
     @Test
-    void createUserRepeatUsername() throws InvalidFormatException{
+    void createUserRepeatUsername() {
         // Checks the expected exception is thrown
-        assertThrows(InvalidKeyException.class, () ->
-        {
-            Account.createAccount(repo, "testUser1", "MyPassword2!");}
-        );
+        assertThrows(InvalidKeyException.class, () -> Account.createAccount(repo, "testUser1", "MyPassword2!"));
+
     }
 
-    // Note: No tests for invalidFormats because those methods are not defined yet.
+    /**
+     * Tests a valid username during account creation
+     */
+    @Test
+    void checkUsernameFormat_Valid() {
+        assertDoesNotThrow(() -> Account.createAccount(repo, "validUser", "ValidPass1!"));
+    }
+
+    /**
+     * Tests an invalid username with an invalid length
+     */
+    @Test
+    void checkUsernameFormat_InvalidLength() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "ab", "ValidPass1!"));
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "a".repeat(21), "ValidPass1!"));
+    }
+
+    /**
+     * Tests an invalid username with invalid characters
+     */
+    @Test
+    void checkUsernameFormat_InvalidCharacters() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "invalid user", "ValidPass1!"));
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "invalid@user", "ValidPass1!"));
+    }
+
+    /**
+     * Tests a valid password during account creation
+     */
+    @Test
+    void checkPasswordFormat_Valid() {
+        assertDoesNotThrow(() -> Account.createAccount(repo, "validUser", "ValidPass1!"));
+    }
+
+    /**
+     * Tests an invalid password with an invalid length
+     */
+    @Test
+    void checkPasswordFormat_InvalidLength() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "Short1!"));
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "a".repeat(21) + "1!"));
+    }
+
+    /**
+     * Tests an invalid password with missing characters
+     */
+    @Test
+    void checkPasswordFormat_MissingDigit() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "NoDigitPass!"));
+    }
+
+    /**
+     * Tests an invalid password with missing characters
+     */
+    @Test
+    void checkPasswordFormat_MissingLowercase() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "NOLOWERCASE1!"));
+    }
+
+    /**
+     * Tests an invalid password with missing characters
+     */
+    @Test
+    void checkPasswordFormat_MissingUppercase() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "nouppercase1!"));
+    }
+
+    /**
+     * Tests an invalid password with missing characters
+     */
+    @Test
+    void checkPasswordFormat_MissingSpecialCharacter() {
+        assertThrows(IllegalArgumentException.class, () -> Account.createAccount(repo, "validUser", "NoSpecialChar1"));
+    }
+
+
 }
