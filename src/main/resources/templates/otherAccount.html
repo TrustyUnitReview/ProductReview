@@ -13,7 +13,7 @@
 <!-- NAVBAR -->
 <nav class="navbar sticky-top border-bottom navbar-expand-lg navbar-color">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">TPR</a>
+        <a class="navbar-brand" href="/dashboard">TPR</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,16 +22,10 @@
                 <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
             </div>
         </div>
-
-        <ul class="navbar-nav mx-2">
-            <li class="nav-item mx-2">
-                <a href="/login" class="btn btn-primary">Login</a>
-            </li>
-            <li class="nav-item">
-                <a href="/registration" class="btn btn-primary">Register</a>
-            </li>
-        </ul>
-
+        <div class="navbar-nav me-3 mb-2 mb-lg-0">
+            <a href="/registration" class="nav-link">Registration</a>
+            <a href="/logout" class="nav-link">Logout</a>
+        </div>
         <a class="navbar-brand" href="/account/own">
             <img th:src="@{/svg/account.svg}" src="../static/svg/account.svg" alt="Account" style="width: 32px; height: 32px">
         </a>
