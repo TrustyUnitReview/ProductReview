@@ -1,0 +1,48 @@
+body { box-sizing: border-box; }
+body *, body *:before, body *:after { box-sizing: inherit; }
+
+.container {
+    max-width: 90%;
+    margin: auto;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.flex-container .f-item:first-child {
+    margin-left: auto;
+}
+
+.flex-container .f-item:last-child {
+    margin-right: auto;
+}
+
+.flex-container .f-item{
+    position: relative;
+    padding: 0.7rem 1rem;
+    margin: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+}
+
+.flex-container .f-item:hover{
+    background-color: #eee;
+}
+
+
+a.fill-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
