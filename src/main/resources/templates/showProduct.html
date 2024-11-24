@@ -21,8 +21,18 @@
                 <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
             </div>
         </div>
-        <a class="navbar-brand" href="/dashboard">
-            <img th:src="@{/svg/account.svg}" src="../static/svg/account.svg" alt="Account" style="width: 30px; height: 30px">
+
+        <ul class="navbar-nav mx-2">
+            <li class="nav-item mx-2">
+                <a href="/login" class="btn btn-primary">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="/registration" class="btn btn-primary">Register</a>
+            </li>
+        </ul>
+
+        <a class="navbar-brand" href="/account/own">
+            <img th:src="@{/svg/account.svg}" src="../static/svg/account.svg" alt="Account" style="width: 32px; height: 32px">
         </a>
     </div>
 </nav>
@@ -63,7 +73,7 @@
             <div th:each="review : ${reviews}" class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed ghostwhite-bg-col" type="button" data-th-attr="data-bs-target='#' + ${review.reviewID}" data-bs-toggle="collapse" aria-expanded="true">
-                        <div th:text="|Review by: ${review.account}|" class="me-3"></div>
+                        <div th:text="|Review by: ${review?.account?.username}|" class="me-3"></div>
                         <div class="d-flex flex-row">
                             <div th:each="i : ${#numbers.sequence(1, review.rating.getValue())}" class="displayStarFill">★</div>
                         </div>
