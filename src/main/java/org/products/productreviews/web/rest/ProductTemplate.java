@@ -36,7 +36,7 @@ public class ProductTemplate {
         Product product = productRepo.findByName(pName);
 
         ArrayList<Review> sortedReviews = product.getReviews().stream()
-                .sorted(Comparator.comparing(Review::getRating).reversed())
+                .sorted(Comparator.comparing(Review::getReviewID))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         model.addAttribute("product", product);

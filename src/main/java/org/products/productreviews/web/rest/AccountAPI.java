@@ -1,79 +1,49 @@
 package org.products.productreviews.web.rest;
 
-import jakarta.servlet.http.HttpServletRequest;
+import org.products.productreviews.ProductReviewsApplication;
 import org.products.productreviews.app.entities.Account;
-import org.products.productreviews.app.repositories.AccountRepository;
-import org.products.productreviews.web.util.WebUtil;
-import org.springframework.http.HttpStatus;
+import org.products.productreviews.web.util.patcher.Patcher;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.logging.Level;
 
-/**
- * REST controller for managing accounts
- */
 @Controller
 @RequestMapping("/account")
 public class AccountAPI {
 
-    private final AccountRepository accountRepo;
-
-    /**
-     * Constructor for initializing account repository
-     *
-     * @param accountRepo The repository for accounts
-     */
-    public AccountAPI(AccountRepository accountRepo) {
-        this.accountRepo = accountRepo;
-    }
-
-    /**
-     * Updates an account to add a following to another user
-     *
-     * @param username of the account to be followed
-     * @param request HttpServletRequest reference
-     * @return The page to be served upon following an account
-     */
-    @PostMapping("/{username}/follow")
-    public String followAccount(@PathVariable("username") String username, HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
-        Optional<Account> otherAccount = accountRepo.findByUsername(username);
-
-        if (account.isPresent() && otherAccount.isPresent()) {
-            account.get().addFollows(otherAccount.get());
-            accountRepo.save(account.get());
-            return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found").toString();
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> editAccount(@PathVariable long id, @RequestBody Account partialAccount) {
+        Account currentAccount = null;
+        // find user from userRepo by id and ensure user matches with authenticated user
+        // if user does not match, don't patch
+        if (currentAccount != null) {
+            try {
+                Patcher.patch(currentAccount, partialAccount); //this approach is simple, but maybe DTO pattern
+                //save to repo
+            } catch (IllegalAccessException e) {
+                ProductReviewsApplication.LOGGER.log(Level.SEVERE, Arrays.toString(e.getStackTrace()));
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok().build();
         }
+        return ResponseEntity.badRequest().build();
     }
 
-    /**
-     * Updates an account to remove a user from following
-     *
-     * @param username of the account to be unfollowed
-     * @param request HttpServletRequest reference
-     * @return The page to be served upon unfollowing an account
-     */
-    @PostMapping("/{username}/unfollow")
-    public String unfollowAccount(@PathVariable("username") String username, HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
-        Optional<Account> otherAccount = accountRepo.findByUsername(username);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAccount(@PathVariable long id) {
 
-        if (account.isPresent() && otherAccount.isPresent()) {
-            account.get().removeFollows(otherAccount.get());
-            accountRepo.save(account.get());
-            return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found").toString();
+        // find account by id
+        Account account = null;
+        //authenticate  current account with found account
+        // if account does not match, don't delete
+        if (account != null) {
+            //userRepo.deleteById(id)
+            return ResponseEntity.ok().build();
         }
+        return ResponseEntity.badRequest().build();
     }
+
 }

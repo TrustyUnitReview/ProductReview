@@ -5,11 +5,8 @@ import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.management.openmbean.InvalidKeyException;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Entity
@@ -123,16 +120,6 @@ public class Account {
     }
 
     /**
-     * @return Reviews made by this user sorted by best to worst reviews
-     */
-    public Set<Review> getSortedReviews() {
-        //Needed currently so reviews are displayed in the same order each reload - can double for filter
-        return reviews.stream().
-                sorted(Comparator.comparing(Review::getRating).reversed())
-                .collect(Collectors.toCollection(LinkedHashSet::new));
-    }
-
-    /**
      * Adds the provided Review to this account.
      * @param review The Review to be added
      * @return True if the Review was added, False if not.
@@ -140,34 +127,10 @@ public class Account {
     public boolean addReview(Review review) {return reviews.add(review);}
 
     /**
-     * Removes a review from user
-     * @param review which is being deleted
-     * @return True if review was removed, false otherwise.
-     */
-    public boolean removeReview(Review review) {return reviews.remove(review);}
-
-    /**
      * @return Username of this account
      */
     public String getUsername() {
         return username;
     }
-
-    /**
-     * @return Set of users followed
-     */
-    public Set<Account> getFollows() {return follows;}
-
-    /**
-     * Adds a user to follow set
-     * @param account which is being followed
-     */
-    public void addFollows(Account account) {follows.add(account);}
-
-    /**
-     * Removes a user from the follow set
-     * @param account which is being unfollowed
-     */
-    public void removeFollows(Account account) {follows.remove(account);}
 
 }

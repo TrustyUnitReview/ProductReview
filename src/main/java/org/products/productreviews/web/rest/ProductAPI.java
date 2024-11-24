@@ -1,17 +1,13 @@
 package org.products.productreviews.web.rest;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
-import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.web.request.ReviewRequest;
 import org.products.productreviews.web.util.WebUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +22,8 @@ import java.util.Set;
 public class ProductAPI {
 
     private final ProductRepository productRepo;
-    private final AccountRepository accountRepo;
 
-    ProductAPI(ProductRepository productRepository, AccountRepository accountRepo) {
-        productRepo = productRepository;
-        this.accountRepo = accountRepo;
-    }
+    ProductAPI(ProductRepository productRepository) {productRepo = productRepository;}
 
     /**
      * Fetches details for a product by its ID
@@ -113,23 +105,14 @@ public class ProductAPI {
             @ModelAttribute ReviewRequest reviewRequest) {
 
         Product product = productRepo.findByName(name);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
+        //TODO: Replace "null" with the current account. Spring Security can get the Current Account
+        Review review = reviewRequest.toReview(null);
+        product.addReview(review);
+        //TODO: Get current account, add review to current account, save account
 
-        if (account.isPresent()) {
-            Review review = reviewRequest.toReview(account.get());
-            product.addReview(review);
-            account.get().addReview(review);
-            review.setAccount(account.get());
-            review.setProduct(product);
-
-            productRepo.save(product);
-            accountRepo.save(account.get());
-            return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found").toString();
-        }
-
+        // Product will save review by cascade
+        productRepo.save(product);
+        return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
     }
 
 
