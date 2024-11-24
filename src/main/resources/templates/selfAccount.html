@@ -59,7 +59,7 @@
         </div>
 
         <div th:unless="${account.follows.isEmpty()}" class="card-header h2 fw-light">
-            Reviews
+            Users Following
             <div class="flex-container">
                 <div class="f-item" th:each="acc: ${account.getFollows()}">
                     <div class="card-body" th:text="${acc.getUsername()}"></div>
