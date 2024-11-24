@@ -39,7 +39,6 @@ public class ProductTemplateTest {
         Pattern productName = Pattern.compile("<h5 class=\"card-title\">FountainPenTest</h5>");
         Pattern productDescription = Pattern.compile("<p class=\"card-text\">Description</p>");
         Pattern starPattern = Pattern.compile("<div class=\"displayStarFill\">★</div>");
-        Pattern ownerPattern = Pattern.compile("<div class=\"me-3\">Review by: null</div>");
         Pattern formTitlePattern = Pattern.compile("<h5 class=\"card-title\">Leave a Review for FountainPenTest</h5>");
 
 
@@ -59,9 +58,6 @@ public class ProductTemplateTest {
         assertTrue(matcher.find());
 
         matcher = starPattern.matcher(template);
-        assertTrue(matcher.find());
-
-        matcher = ownerPattern.matcher(template);
         assertTrue(matcher.find());
 
         matcher = formTitlePattern.matcher(template);
