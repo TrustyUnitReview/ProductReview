@@ -38,7 +38,7 @@ record JDistUnit(String productName, Review.Star rating){
      * java.lang.Integer}, and so on), the component is considered
      * equal if and only if {@code
      * PW.compare(this.c, r.c)} would return {@code 0}.
-     *
+     * <p>
      * </ul>
      * <p>
      * Apart from the semantics described above, the precise algorithm
