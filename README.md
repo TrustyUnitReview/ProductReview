@@ -28,12 +28,19 @@ git clone https://github.com/TrustyUnitReview/ProductReview
   - [x] Create and link local database
   - [x] Add initial review implementation 
   - [x] Milestone 1 diagrams and documentation 
-- [ ] Milestone 2
-  - [ ] Add login and user authentication
-  - [ ] Add password protection 
-  - [ ] Milestone 2 diagrams and documentation
+- [X] Milestone 2
+  - [X] Add login and user authentication
+  - [X] Add password protection 
+  - [X] Add registration
+  - [X] Fix tests to work with security configuration
+  - [X] Add the ability to follow other users
+  - [X] Milestone 2 diagrams and documentation
 - [ ] Milestone 3
-- [ ] Milestone 4
+  - [ ] Visual improvements
+  - [ ] Images on the dashboard 
+  - [ ] Allow for users to click directly to a reviewer's profile
+  - [ ] Review filtering
+  - [ ] Review recommendations 
 
 See the [open issues](https://github.com/TrustyUnitReview/ProductReview/issues) for a full list of known issues.
 
