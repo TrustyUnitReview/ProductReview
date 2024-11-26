@@ -71,9 +71,6 @@ public class JDistanceTest {
         Review rev1 = new Review(A, "Body", Review.Star.THREE);
         Review rev2 = new Review(A, "Body", Review.Star.THREE);
 
-        example1.addReview(rev1);
-        example2.addReview(rev2);
-
         rev1.setProduct(example1);
         rev2.setProduct(example2);
 
@@ -110,12 +107,6 @@ public class JDistanceTest {
 
         Review rev3 = new Review(B, "Body", Review.Star.TWO);
         Review rev4 = new Review(B, "Body", Review.Star.THREE);
-
-        example1.addReview(rev1);
-        example1.addReview(rev3);
-
-        example2.addReview(rev2);
-        example1.addReview(rev4);
 
         rev1.setProduct(example1);
         rev3.setProduct(example1);
