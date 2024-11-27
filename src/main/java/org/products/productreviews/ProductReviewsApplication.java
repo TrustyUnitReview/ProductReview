@@ -5,11 +5,13 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.web.util.ProductCategory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -75,22 +77,22 @@ public class ProductReviewsApplication {
                             "tincidunt vel consectetur quis, semper vel mauris. Mauris a quam vel lectus tristique " +
                             "eleifend a nec nisi. Nam non porta sem. Fusce sit amet maximus eros. Sed eget tellus " +
                             "lectus. Sed luctus sapien ac vestibulum viverra. ",
-                    null);
+                    null, ProductCategory.OFFICE_SUPPLIES);
             Product example1 = Product.createProduct(productRepository,
                     "FountainPen2",
                     399.99f,
                     "A Fountain Pen",
-                    null);
+                    null, ProductCategory.OFFICE_SUPPLIES);
             Product example2 = Product.createProduct(productRepository,
                     "FountainPen3",
                     399.99f,
                     "A FountainPen",
-                    null);
+                    null, ProductCategory.OFFICE_SUPPLIES);
             Product example3 = Product.createProduct(productRepository,
                     "FountainPen4",
                     399.99f,
                     "A Fountain Pen",
-                    null);
+                    null, ProductCategory.OFFICE_SUPPLIES);
             productRepository.save(example);
             productRepository.save(example1);
             productRepository.save(example2);
