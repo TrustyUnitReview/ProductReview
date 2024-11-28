@@ -126,4 +126,61 @@ public class JDistanceTest {
 
     }
 
+    /**
+     * Makes sure that JDistance will rank users that are closer higher. The closer to 1 the distance is the more
+     * similar they are.
+     */
+    @Test
+    public void testJDistanceIsClosest() throws InvalidFormatException, InvalidKeyException {
+        Account A = Account.createAccount(accountRepository, "User100", "Pass1234!");
+        Account B = Account.createAccount(accountRepository, "User101", "Pass1234!");
+        Account C = Account.createAccount(accountRepository, "User102", "Pass1234!");
+
+        Product example1 = Product.createProduct(productRepository,
+                "FountainPen",
+                399.99f,
+                "A Fountain Pen",
+                null);
+        Product example2 = Product.createProduct(productRepository,
+                "House",
+                10.39f,
+                "A House",
+                null);
+
+        Review rev1 = new Review(A, "Body", Review.Star.THREE);
+        Review rev2 = new Review(A, "Body", Review.Star.THREE);
+
+        Review rev3 = new Review(B, "Body", Review.Star.TWO);
+        Review rev4 = new Review(B, "Body", Review.Star.THREE);
+
+        Review rev5 = new Review(C, "Body", Review.Star.THREE);
+        Review rev6 = new Review(C, "Body", Review.Star.THREE);
+
+        rev1.setProduct(example1);
+        rev3.setProduct(example1);
+        rev5.setProduct(example1);
+
+        rev2.setProduct(example2);
+        rev4.setProduct(example2);
+        rev6.setProduct(example2);
+
+        A.addReview(rev1);
+        A.addReview(rev2);
+
+        B.addReview(rev3);
+        B.addReview(rev4);
+
+        C.addReview(rev5);
+        C.addReview(rev6);
+
+        JDistance jDistance = new JDistance(A, B);
+
+        float result_AB = jDistance.distance();
+
+        jDistance.setAccountB(C);
+        float result_AC = jDistance.distance();
+
+        assertTrue(result_AC > result_AB, "Account that should be closer was not closer");
+    }
+
 }
