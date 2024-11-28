@@ -141,6 +141,6 @@ public class JDistance {
      */
     @Override
     public String toString() {
-        return "Account[" + firstAccount + ", " + secondAccount + "]";
+        return "JDistance[" + firstAccount + ", " + secondAccount + "]";
     }
 }
