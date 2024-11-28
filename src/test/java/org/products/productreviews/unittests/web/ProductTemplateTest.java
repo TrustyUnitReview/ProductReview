@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.web.util.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -44,7 +45,7 @@ public class ProductTemplateTest {
 
         Review review = new Review(null, "Body", Review.Star.ONE);
         Product product = Product.createProduct(productRepository,
-                "FountainPenTest", 100, "Description", null);
+                "FountainPenTest", 100, "Description", null, ProductCategory.OFFICE_SUPPLIES);
         product.addReview(review);
 
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
@@ -77,7 +78,7 @@ public class ProductTemplateTest {
         Pattern formTitlePattern = Pattern.compile("<h5 class=\"card-title\">Leave a Review for FountainPenTest</h5>");
 
         Product product = Product.createProduct(productRepository,
-                "FountainPenTest", 100, "Description", null);
+                "FountainPenTest", 100, "Description", null, ProductCategory.OFFICE_SUPPLIES);
 
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
 

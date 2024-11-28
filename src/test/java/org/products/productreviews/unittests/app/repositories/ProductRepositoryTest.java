@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.web.util.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,7 +22,7 @@ class ProductRepositoryTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        Product validAccount = Product.createProduct(repo,"test1", 100f,"d1", "_.png");
+        Product validAccount = Product.createProduct(repo,"test1", 100f,"d1", "_.png", ProductCategory.OFFICE_SUPPLIES);
         repo.save(validAccount);
     }
 

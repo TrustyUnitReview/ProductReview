@@ -5,11 +5,13 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.web.util.ProductCategory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -75,26 +77,32 @@ public class ProductReviewsApplication {
                             "tincidunt vel consectetur quis, semper vel mauris. Mauris a quam vel lectus tristique " +
                             "eleifend a nec nisi. Nam non porta sem. Fusce sit amet maximus eros. Sed eget tellus " +
                             "lectus. Sed luctus sapien ac vestibulum viverra. ",
-                    null);
+                    null, ProductCategory.OFFICE_SUPPLIES);
             Product example1 = Product.createProduct(productRepository,
-                    "FountainPen2",
-                    399.99f,
-                    "A Fountain Pen",
-                    null);
+                    "E-Book Reader",
+                    199.99f,
+                    "A tablet used to purchase and read e-books",
+                    null, ProductCategory.ELECTRONICS);
             Product example2 = Product.createProduct(productRepository,
-                    "FountainPen3",
-                    399.99f,
-                    "A FountainPen",
-                    null);
+                    "Lawnmower",
+                    599.99f,
+                    "A lawnmower to cut grass.",
+                    null, ProductCategory.LANDSCAPING);
             Product example3 = Product.createProduct(productRepository,
-                    "FountainPen4",
-                    399.99f,
-                    "A Fountain Pen",
-                    null);
+                    "War and Peace",
+                    19.99f,
+                    "A long book, it has many pages.",
+                    null, ProductCategory.BOOKS);
+            Product example4 = Product.createProduct(productRepository,
+                    "War and Peace 2",
+                    19.99f,
+                    "A long book, it has many more pages.",
+                    null, ProductCategory.BOOKS);
             productRepository.save(example);
             productRepository.save(example1);
             productRepository.save(example2);
             productRepository.save(example3);
+            productRepository.save(example4);
 
 
             // Create Accounts
