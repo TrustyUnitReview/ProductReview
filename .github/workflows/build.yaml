@@ -1,9 +1,6 @@
 name: Build and Test JAR app - ProductReview
 
 on:
-  push:
-    branches:
-      - '**'
   pull_request:
     branches:
       - master
