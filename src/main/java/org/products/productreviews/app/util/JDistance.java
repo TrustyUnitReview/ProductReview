@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Jaccard Distance between accounts: Size of intersection / Size of Union
+ * Jaccard Distance between accounts: Size of intersection / Size of Union.
+ *
  * <br>
  * Each unit in a JDistance set is Product + Rating.
  * <br> <br>
@@ -55,11 +56,13 @@ public class JDistance {
      * @param B The second account
      */
     public void setAccountB(Account B){
-        this.firstAccount = B;
+        this.secondAccount = B;
     }
 
     /**
      * Finds the Jaccard distance between two Accounts.
+     *<br>
+     * Distance ranges from 0 to 1, where 0 is no similarity and where 1 is exactly the same.
      *
      * @return The Jaccard distance
      * @throws IllegalArgumentException If neither Account A nor Account B are set
