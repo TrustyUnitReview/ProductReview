@@ -152,7 +152,7 @@ public class Product {
 
     /**
      * Get the categories of this product
-     * @return the categories of this product
+     * @return the category of this product
      */
     public ProductCategory getCategory(){
         return category;

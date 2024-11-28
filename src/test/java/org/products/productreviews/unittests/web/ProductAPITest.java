@@ -10,6 +10,7 @@ import org.products.productreviews.app.repositories.ProductRepository;
 import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.unittests.security.TestSecurityConfig;
 import org.products.productreviews.web.rest.ProductAPI;
+import org.products.productreviews.web.util.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.hamcrest.Matchers.containsString;
@@ -57,7 +58,7 @@ public class ProductAPITest {
      */
     @Test
     void testProductDetailsFound() throws Exception {
-        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
+        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg", ProductCategory.OFFICE_SUPPLIES);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 
@@ -90,7 +91,7 @@ public class ProductAPITest {
      */
     @Test
     void testDisplayProductReviews() throws Exception {
-        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
+        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg", ProductCategory.OFFICE_SUPPLIES);
         Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
         product.addReview(review);
@@ -110,7 +111,7 @@ public class ProductAPITest {
      */
     @Test
     void testDisplayProductEmptyReviews() throws Exception {
-        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
+        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg", ProductCategory.OFFICE_SUPPLIES);
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 
         mockMvc.perform(get("/product/1/reviews"))
@@ -125,7 +126,7 @@ public class ProductAPITest {
      */
     @Test
     void testSubmitValidReview() throws Exception {
-        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg");
+        Product product = Product.createProduct(productRepository, "Test Product", 100f, "Test Description",  "test.jpg", ProductCategory.OFFICE_SUPPLIES);
         Account account = Account.createAccount(accountRepository, "testUser", "MyPassword1!");
         Review review = new Review(account,"Test Review Description", Review.Star.FIVE);
 
