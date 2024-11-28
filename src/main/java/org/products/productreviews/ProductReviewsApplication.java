@@ -79,24 +79,30 @@ public class ProductReviewsApplication {
                             "lectus. Sed luctus sapien ac vestibulum viverra. ",
                     null, ProductCategory.OFFICE_SUPPLIES);
             Product example1 = Product.createProduct(productRepository,
-                    "FountainPen2",
-                    399.99f,
-                    "A Fountain Pen",
-                    null, ProductCategory.OFFICE_SUPPLIES);
+                    "E-Book Reader",
+                    199.99f,
+                    "A tablet used to purchase and read e-books",
+                    null, ProductCategory.ELECTRONICS);
             Product example2 = Product.createProduct(productRepository,
-                    "FountainPen3",
-                    399.99f,
-                    "A FountainPen",
-                    null, ProductCategory.OFFICE_SUPPLIES);
+                    "Lawnmower",
+                    599.99f,
+                    "A lawnmower to cut grass.",
+                    null, ProductCategory.LANDSCAPING);
             Product example3 = Product.createProduct(productRepository,
-                    "FountainPen4",
-                    399.99f,
-                    "A Fountain Pen",
-                    null, ProductCategory.OFFICE_SUPPLIES);
+                    "War and Peace",
+                    19.99f,
+                    "A long book, it has many pages.",
+                    null, ProductCategory.BOOKS);
+            Product example4 = Product.createProduct(productRepository,
+                    "War and Peace 2",
+                    19.99f,
+                    "A long book, it has many more pages.",
+                    null, ProductCategory.BOOKS);
             productRepository.save(example);
             productRepository.save(example1);
             productRepository.save(example2);
             productRepository.save(example3);
+            productRepository.save(example4);
 
 
             // Create Accounts
