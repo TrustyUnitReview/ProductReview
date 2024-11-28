@@ -61,11 +61,13 @@ public class JDistanceTest {
                 "FountainPen",
                 399.99f,
                 "A Fountain Pen",
+                null,
                 null);
         Product example2 = Product.createProduct(productRepository,
                 "House",
                 10.39f,
                 "A House",
+                null,
                 null);
 
         Review rev1 = new Review(A, "Body", Review.Star.THREE);
@@ -95,11 +97,13 @@ public class JDistanceTest {
                 "FountainPen",
                 399.99f,
                 "A Fountain Pen",
+                null,
                 null);
         Product example2 = Product.createProduct(productRepository,
                 "House",
                 10.39f,
                 "A House",
+                null,
                 null);
 
         Review rev1 = new Review(A, "Body", Review.Star.THREE);
@@ -140,11 +144,13 @@ public class JDistanceTest {
                 "FountainPen",
                 399.99f,
                 "A Fountain Pen",
+                null,
                 null);
         Product example2 = Product.createProduct(productRepository,
                 "House",
                 10.39f,
                 "A House",
+                null,
                 null);
 
         Review rev1 = new Review(A, "Body", Review.Star.THREE);
