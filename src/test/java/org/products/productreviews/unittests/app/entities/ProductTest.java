@@ -12,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.InvalidKeyException;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -72,7 +70,7 @@ class ProductTest {
     void productScore() throws InvalidFormatException{
         Product testProduct = repo.findByName("prodName1");
         // Stubbing test value set to 0.0f for now
-        assertEquals(0.0f, testProduct.getReviewScore());
+        assertEquals(0.0f, testProduct.getAvgReviewScore());
     }
 
     // Note: No tests for invalidFormats because those methods are not defined yet.

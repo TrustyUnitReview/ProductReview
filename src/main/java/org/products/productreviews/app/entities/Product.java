@@ -7,7 +7,6 @@ import org.products.productreviews.web.util.ProductCategory;
 
 import java.awt.*;
 import java.security.InvalidKeyException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,9 +99,29 @@ public class Product {
         // TODO: Implement this, set loadedImage using imagePath
     }
 
-    public float getReviewScore(){
-        // TODO: Implement scoring algorithm... May take in a strategy later
-        return 0.0f; // Between 1-5
+    /**
+     * Calculate real average review score of the product.
+     * @return float average review score of the product
+     */
+    public float getAvgReviewScore(){
+        if(reviews == null || reviews.isEmpty()){
+            return 0.0f;
+        }
+        float sum = 0.0f;
+        for(Review review : reviews){
+            sum += review.getRating().getValue();
+        }
+
+        return sum / reviews.size();
+    }
+
+    /**
+     * Calculate average review score of the product and round it to 1 decimal place.
+     * For view purposes.
+     * @return
+     */
+    public double getRoundedAvgReviewScore(){
+        return Math.round(getAvgReviewScore() * 10.0) / 10.0;
     }
 
     /**
@@ -154,8 +173,8 @@ public class Product {
      * Get the categories of this product
      * @return the category of this product
      */
-    public ProductCategory getCategory(){
-        return category;
+    public String getCategoryString(){
+        return category.displayOnDashboard();
     }
 
     /**
