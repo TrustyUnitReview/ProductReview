@@ -34,7 +34,6 @@ class ReviewAPITest {
     @MockBean
     private ReviewRepository reviewRepository;
 
-    //TODO: Delete when CommandlineRunner is deleted
     @MockBean
     ProductRepository productRepository;
 
