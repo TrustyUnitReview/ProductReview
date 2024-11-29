@@ -9,6 +9,10 @@
 
 /* Review Section */
 
+.sort-button:hover {
+    background-color: #0056b3 !important;
+}
+
 .review-container {
     background: darkkhaki;
     width: 90%;
