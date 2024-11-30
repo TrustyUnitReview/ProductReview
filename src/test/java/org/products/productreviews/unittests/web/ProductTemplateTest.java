@@ -29,7 +29,7 @@ public class ProductTemplateTest {
     private TestRestTemplate restTemplate;
 
     @MockBean
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     /**
      * Tests the template that is returned when requesting reviews for a product name

@@ -22,6 +22,8 @@ public class ReviewRepositoryTest {
     @Autowired
     private AccountRepository accountRepository;
 
+    private Long expectedId;
+
 
     @BeforeEach
     void setUpBeforeClass() throws InvalidFormatException {
@@ -29,6 +31,7 @@ public class ReviewRepositoryTest {
         Review review = new Review(account, "Body", Review.Star.THREE);
         accountRepository.save(account);
         reviewRepository.save(review);
+        expectedId = review.getReviewID();
     }
 
     @AfterEach
@@ -42,7 +45,7 @@ public class ReviewRepositoryTest {
      */
     @Test
     void testGetByID(){
-        Review review = reviewRepository.findById(1L).orElseThrow();
+        Review review = reviewRepository.findById(expectedId).orElseThrow();
         Account account = review.getAccount();
         assertEquals("Body", review.getBody());
         assertEquals("uName", account.getUsername());

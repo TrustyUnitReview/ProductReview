@@ -46,7 +46,6 @@ class ProductRepositoryTest {
 
     /**
      * This test checks if the findByName works as intended.
-     *
      * Checks that a product is returned, check as many known properties as possible.
      */
     @Test
@@ -54,6 +53,12 @@ class ProductRepositoryTest {
         Product testProduct = repo.findByName("test1");
 
         assertNotNull(testProduct);
-        assertEquals(0.0f, testProduct.getReviewScore());
+        assertEquals(0.0f, testProduct.getAvgReviewScore());
+    }
+
+    @Test
+    void testFindByCategory(){
+        Product testProduct = repo.findByName("test1");
+        assertEquals(ProductCategory.OFFICE_SUPPLIES, testProduct.getCategory());
     }
 }
