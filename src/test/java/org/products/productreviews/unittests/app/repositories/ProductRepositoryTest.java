@@ -55,4 +55,10 @@ class ProductRepositoryTest {
         assertNotNull(testProduct);
         assertEquals(0.0f, testProduct.getAvgReviewScore());
     }
+
+    @Test
+    void testFindByCategory(){
+        Product testProduct = repo.findByName("test1");
+        assertEquals(ProductCategory.OFFICE_SUPPLIES, testProduct.getCategory());
+    }
 }

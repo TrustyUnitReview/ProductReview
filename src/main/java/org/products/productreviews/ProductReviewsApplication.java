@@ -91,7 +91,6 @@ public class ProductReviewsApplication {
             Account account2 = Account.createAccount(accountRepository,
                     "user2",
                     "Pass1234!");
-            account2.addFollows(account1);
             accountRepository.save(account2);
 
             // Extra sample users
@@ -108,75 +107,7 @@ public class ProductReviewsApplication {
                     "Pass1234!");
             accountRepository.save(account5);
 
-            //following
-            account2.addFollows(account1);
-
-            createReviews(product1, product2, product3, product4, account1, account2, account3, account4, account5, reviewRepository);
         };
-    }
-
-    /**
-     * Hard code reviews for products. Mostly made for testing purposes.
-     */
-    private void createReviews(Product p1, Product p2, Product p3, Product p4,
-                               Account a1, Account a2, Account a3, Account a4, Account a5, ReviewRepository reviewRepository) {
-
-        //create Reviews and assign them to accounts
-        Review r1 = new Review(a1, "Best e-reader out there! I never have to worry about not finding a book I want to read.",
-                            Review.Star.FIVE);
-        a1.addReview(r1);
-        Review r2 = new Review(a2, "I really liked this device! However I wish it came in different colours",
-                            Review.Star.FOUR);
-        a2.addReview(r2);
-        Review r3 = new Review(a3, "Very nice lawnmower, it has lasted me for years!",
-                            Review.Star.FIVE);
-        a3.addReview(r3);
-        Review r4 = new Review(a4, "I've been buying lawnmowers from this company for years. They last a long time and get the job done quickly!",
-                            Review.Star.FIVE);
-        a4.addReview(r4);
-        Review r5 = new Review(a1, "Very dry read, I don't understand the hype of Tolstoy.",
-                            Review.Star.ONE);
-        a1.addReview(r5);
-        Review r6 = new Review(a5, "Book sounded too scripted, as if the author was rushing. It was a good story but could have been written much better.",
-                            Review.Star.TWO);
-        a5.addReview(r6);
-        Review r7 = new Review(a3, "This book was even better than the first! I finished it in a day because of how captivating it was. Highly recommend!",
-                            Review.Star.FIVE);
-        a3.addReview(r7);
-        Review r8 = new Review(a2, "Overall this was a good story but do think that the ending could have been better...",
-                Review.Star.THREE);
-        a2.addReview(r8);
-
-        //assign reviews to products and products to reviews
-        p1.addReview(r1);
-        r1.setProduct(p1);
-        p1.addReview(r2);
-        r2.setProduct(p1);
-
-        p2.addReview(r3);
-        r3.setProduct(p2);
-        p2.addReview(r4);
-        r4.setProduct(p2);
-
-        p3.addReview(r5);
-        r5.setProduct(p3);
-        p3.addReview(r6);
-        r6.setProduct(p3);
-
-        p4.addReview(r7);
-        r7.setProduct(p4);
-        p4.addReview(r8);
-        r8.setProduct(p4);
-
-        reviewRepository.save(r1);
-        reviewRepository.save(r2);
-        reviewRepository.save(r3);
-        reviewRepository.save(r4);
-        reviewRepository.save(r5);
-        reviewRepository.save(r6);
-        reviewRepository.save(r7);
-        reviewRepository.save(r8);
-
     }
 
 }

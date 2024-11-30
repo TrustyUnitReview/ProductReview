@@ -62,6 +62,11 @@ public class DashboardTemplate {
         return "dashboard";
     }
 
+    /**
+     * Sort all products in database by given category
+     * @param category Category to sort by
+     * @return List of products sorted by category
+     */
     private List<Product> sortProductsByCategory(String category){
         List<Product> products;
         try {
@@ -79,11 +84,16 @@ public class DashboardTemplate {
      * @param products Products to sort (after category filter has been applied)
      * @return Sorted products
      */
-    private List<Product> sortProductsAvgRating(List<Product> products){
+    public List<Product> sortProductsAvgRating(List<Product> products){
         products.sort((p1, p2) -> Double.compare(p2.getAvgReviewScore(), p1.getAvgReviewScore()));
         return products;
     }
 
+    /**
+     * Sort products by average rating from users that the current user follows
+     * @param products Products to sort (after category filter has been applied)
+     * @return Sorted products
+     */
     private List<Product> sortProductsAvgRatingUsersFollowing(List<Product> products){
         //get current user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,7 +125,7 @@ public class DashboardTemplate {
      * @param followedUsers Set of users that the current user follows
      * @return Average rating from followed users
      */
-    private float calculateAverageRatingFromFollowedUsers(Product product, Set<Account> followedUsers) {
+    public float calculateAverageRatingFromFollowedUsers(Product product, Set<Account> followedUsers) {
         Set<Review> reviews = product.getReviews(); // Assuming Product has a `getReviews()` method
         float totalRating = 0.0f;
         int count = 0;
