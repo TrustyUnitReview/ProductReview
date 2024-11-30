@@ -32,7 +32,7 @@ public class ProductReviewsApplication {
      * @return CommandLineRunner
      */
     @Bean
-    CommandLineRunner commandLineRunner(ProductRepository productRepository, AccountRepository accountRepository, ReviewRepository reviewRepository) {
+    CommandLineRunner commandLineRunner(ProductRepository productRepository, AccountRepository accountRepository) {
         return args ->  {
             //account for testing
             Account admin = Account.createAccount(accountRepository, "username", "MyPassword1!");

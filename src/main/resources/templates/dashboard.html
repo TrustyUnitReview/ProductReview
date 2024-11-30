@@ -87,7 +87,6 @@
             </span>
             <span th:if="${product.getRoundedAvgReviewScore() < 1}">No reviews</span>
           </p>
-
           <p th:if="${product.description.length() <= 40}" class="card-text" th:text="|${product.description}|">Description</p>
           <p th:unless="${product.description.length() <= 40}" class="card-text" th:text="|${product.description.substring(0, 40)} . . . |">Description</p>
           <a th:href="'/product/show?productName=' + ${product.getName()}" class="btn btn-primary">View</a>

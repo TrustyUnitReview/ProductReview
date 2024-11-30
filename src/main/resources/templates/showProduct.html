@@ -44,7 +44,9 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="|${productName}|"></h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">
-                        <span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span> <br>
+                        <span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span>
+                    </h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">
                         <span th:text="|${product.category}|"></span>
                     </h6>
                     <p class="card-text" th:text="|${product.description}|">Description</p>
@@ -64,23 +66,33 @@
         <!-- Empty End -->
 
         <!-- Review List -->
-        <div th:unless="${reviews.isEmpty()}" class="accordion col-6" id="reviewAccordion">
-            <div th:each="review : ${reviews}" class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed ghostwhite-bg-col" type="button" data-th-attr="data-bs-target='#' + ${review.reviewID}" data-bs-toggle="collapse" aria-expanded="true">
-                        <div th:text="|${review?.account?.username}${''''}s Review|" class="me-3"></div>
-                        <div class="d-flex flex-row">
-                            <div th:each="i : ${#numbers.sequence(1, review.rating.getValue())}" class="displayStarFill">★</div>
+        <div th:unless="${reviews.isEmpty()}" class="col-6">
+            <!-- Filter Tags -->
+            <div class="filter-section mb-2 g-2">
+                <a th:href="'/product/filter?productName=' + ${productName} + '&sort=Jaccard'"><span class="badge rounded-pill text-bg-primary row-3 sort-button" id="test">Distance Sort</span></a>
+                <a th:href="'/product/show?productName=' + ${productName}"><span class="badge rounded-pill text-bg-primary row-3 sort-button">First Posted Sort</span></a>
+            </div>
+            <!-- Filter Tags End -->
+
+            <!-- Accordion Start -->
+            <div th:unless="${reviews.isEmpty()}" class="accordion" id="reviewAccordion">
+                <div th:each="review : ${reviews}" class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed ghostwhite-bg-col" type="button" data-th-attr="data-bs-target='#' + ${review.reviewID}" data-bs-toggle="collapse" aria-expanded="true">
+                            <div th:text="|${review?.account?.username}${''''}s Review|" class="me-3"></div>
+                            <div class="d-flex flex-row">
+                                <div th:each="i : ${#numbers.sequence(1, review.rating.getValue())}" class="displayStarFill">★</div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div th:id="${review.reviewID}" class="accordion-collapse collapse ghostwhite-bg-col" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body text-break">
+                            <a th:text="${review?.account?.username}" th:href="'/account/' + ${review?.account?.username}"></a>
+                            <p th:text="${review.body}"></p>
                         </div>
-                    </button>
-                </h2>
-                <div th:id="${review.reviewID}" class="accordion-collapse collapse ghostwhite-bg-col" data-bs-parent="#reviewAccordion">
-                    <div class="accordion-body text-break">
-                        <a th:text="${review?.account?.username}" th:href="'/account/' + ${review?.account?.username}"></a>
-                        <p th:text="${review.body}"></p>
                     </div>
                 </div>
-            </div>
+            </div> <!-- Accordion End -->
         </div>
         <!-- Review List End -->
 
