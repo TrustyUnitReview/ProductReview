@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ProductTemplate.class)
+@WithMockUser("User100")
 public class ProductTemplateTest {
 
     @Autowired
@@ -40,7 +41,6 @@ public class ProductTemplateTest {
      * Looks for specific HTML elements
      */
     @Test
-    @WithMockUser
     void testShowReviewsForProduct() throws Exception {
         Pattern productName = Pattern.compile("<h5 class=\"card-title\">FountainPenTest</h5>");
         Pattern productDescription = Pattern.compile("<p class=\"card-text\">Description</p>");
@@ -48,11 +48,14 @@ public class ProductTemplateTest {
         Pattern formTitlePattern = Pattern.compile("<h5 class=\"card-title\">Leave a Review for FountainPenTest</h5>");
 
 
-        Review review = new Review(null, "Body", Review.Star.ONE);
+        Account A = Account.createAccount(accountRepository, "User100", "Pass1234!");
+        Account B = Account.createAccount(accountRepository, "User101", "Pass1234!");
+        Review review = new Review(B, "Body", Review.Star.ONE);
         Product product = Product.createProduct(productRepository,
                 "FountainPenTest", 100, "Description", null, ProductCategory.OFFICE_SUPPLIES);
         product.addReview(review);
 
+        when(accountRepository.findByUsername("User100")).thenReturn(Optional.of(A));
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
 
         MvcResult result = mockMvc.perform(
@@ -79,7 +82,6 @@ public class ProductTemplateTest {
      * Looks for specific HTML elements
      */
     @Test
-    @WithMockUser
     void testShowReviewsForProductEmpty() throws Exception {
         Pattern productName = Pattern.compile("<h5 class=\"card-title\">FountainPenTest</h5>");
         Pattern productDescription = Pattern.compile("<p class=\"card-text\">Description</p>");
@@ -89,7 +91,9 @@ public class ProductTemplateTest {
 
         Product product = Product.createProduct(productRepository,
                 "FountainPenTest", 100, "Description", null, ProductCategory.OFFICE_SUPPLIES);
+        Account account = Account.createAccount(accountRepository, "User100", "Pass1234!");
 
+        when(accountRepository.findByUsername("User100")).thenReturn(Optional.of(account));
         when(productRepository.findByName("FountainPenTest")).thenReturn(product);
 
         MvcResult result = mockMvc.perform(
@@ -128,7 +132,6 @@ public class ProductTemplateTest {
      *
      */
     @Test
-    @WithMockUser("User100")
     void testFilterWithJaccardSort() throws Exception {
 
         Pattern user100Pattern = Pattern.compile("User100");
