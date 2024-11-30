@@ -32,6 +32,35 @@
 </nav>
 <!-- NAVBAR END -->
 
+<!-- FILTER FORM -->
+<div class="container mt-3">
+  <form method="get" action="/dashboard">
+    <label for="category" class="form-label">Filter by Category:</label>
+    <div class="row align-items-center">
+      <!-- Dropdown Menu -->
+      <div class="col-md-4">
+        <select id="category" name="category" class="form-select">
+          <option value="" selected>All Categories</option>
+          <option th:each="category : ${categories}"
+                  th:value="${category}"
+                  th:text="${category.toString()}">
+          </option>
+        </select>
+      </div>
+      <!-- Checkbox and Filter Button -->
+      <div class="col-md-4 d-flex align-items-center">
+        <label class="form-check-label me-3">
+          <input type="checkbox" name="sortByUsersFollowing" value="true" th:checked="${sortByUsersFollowing}">
+          Filter by average rating of followed users
+        </label>
+        <button type="submit" class="btn btn-primary ms-3">Filter</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- PRODUCT CARDS -->
 <div th:if="${products?.size == 0}" class="container">
   <h2 class="position-absolute top-50 start-50 translate-middle"><strong>No Products Available</strong></h2>
 </div>
@@ -46,7 +75,18 @@
           <img th:unless="${product.image == null}" th:src="@{/images/placeholder.jpg}" src="../static/images/placeholder.jpg" class="card-img-bottom mb-2" alt="Placeholder">
           <h5 class="card-title" th:text="|${product.name}|">Product Name</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span></h6>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.category}|"></span></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.getCategoryString()}|"></span></h6>
+          <!-- Display Average Rating -->
+          <p class="card-text">
+            <strong>Average Rating: </strong>
+              <span th:if="${product.getRoundedAvgReviewScore() > 0}">
+              <span th:if="${product.getRoundedAvgReviewScore() == product.getRoundedAvgReviewScore().intValue()}"
+                    th:text="|${product.getRoundedAvgReviewScore().intValue()}/5|">4/5</span>
+              <span th:unless="${product.getRoundedAvgReviewScore() == product.getRoundedAvgReviewScore().intValue()}"
+                    th:text="|${product.getRoundedAvgReviewScore()}/5|">4.5/5</span>
+            </span>
+            <span th:if="${product.getRoundedAvgReviewScore() < 1}">No reviews</span>
+          </p>
           <p th:if="${product.description.length() <= 40}" class="card-text" th:text="|${product.description}|">Description</p>
           <p th:unless="${product.description.length() <= 40}" class="card-text" th:text="|${product.description.substring(0, 40)} . . . |">Description</p>
           <a th:href="'/product/show?productName=' + ${product.getName()}" class="btn btn-primary">View</a>

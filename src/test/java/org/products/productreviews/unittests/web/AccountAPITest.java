@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.web.rest.AccountAPI;
 import org.products.productreviews.web.rest.DashboardTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,11 @@ public class AccountAPITest {
     @MockBean
     private AccountRepository accountRepository;
 
-    @MockBean ProductRepository productRepository;
+    @MockBean
+    private ProductRepository productRepository; //needed for complete project setup
+
+    @MockBean
+    private ReviewRepository reviewRepository; //needed for complete project setup
 
     private Account account, otherAccount;
 

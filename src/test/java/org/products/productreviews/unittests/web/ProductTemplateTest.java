@@ -30,7 +30,7 @@ public class ProductTemplateTest {
     private MockMvc mockMvc;
 
     @MockBean
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @MockBean
     AccountRepository accountRepository;

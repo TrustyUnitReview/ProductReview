@@ -2,6 +2,7 @@ package org.products.productreviews.unittests.security;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -43,6 +44,9 @@ public class RegistrationControllerTest {
      */
     @Test
     public void testRegisterPostSuccess() throws Exception {
+        Account account = Account.createAccount(accountRepo, "testuser", "Password1!");
+        accountRepo.save(account);
+
         when(accountRepo.existsByUsername("testuser")).thenReturn(false);
 
         mockMvc.perform(post("/registration").with(csrf())
