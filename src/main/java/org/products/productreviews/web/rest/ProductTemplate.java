@@ -55,15 +55,11 @@ public class ProductTemplate {
         Account account = accountRepo.findByUsername(authentication.getName()).orElseThrow();
         boolean alreadyReviewed = sortedReviews.stream().anyMatch(review -> review.getAccount().equals(account));
 
-        // Review request set isEdit
-        ReviewRequest reviewRequest = new ReviewRequest();
-        reviewRequest.setIsEdit(alreadyReviewed);
-
         model.addAttribute("product", product);
         model.addAttribute("productName", pName);
         model.addAttribute("reviews", sortedReviews);
         model.addAttribute("alreadyPostedReview", alreadyReviewed);
-        model.addAttribute("reviewReq", reviewRequest);
+        model.addAttribute("reviewReq", new ReviewRequest());
         return "showProduct";
     }
 

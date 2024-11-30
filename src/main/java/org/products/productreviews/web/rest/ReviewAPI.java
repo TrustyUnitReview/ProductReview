@@ -67,7 +67,13 @@ public class ReviewAPI {
         return ResponseEntity.status(HttpStatus.OK).body(existingReview);
     }
 
-
+    /**
+     * Edit review belonging to current user under specified product
+     * @param request HttpRequest
+     * @param name Name of the product
+     * @param reviewRequest ReviewRequest object
+     * @return Redirect to where the request came from.
+     */
     @PostMapping("/{name}/edit")
     String editReviewByProductName(
             HttpServletRequest request,
