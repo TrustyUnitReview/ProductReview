@@ -5,6 +5,8 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.app.repositories.ReviewRepository;
+import org.products.productreviews.app.services.AccountService;
 import org.products.productreviews.app.util.JDistance;
 import org.products.productreviews.web.request.ReviewRequest;
 import org.springframework.security.core.Authentication;
@@ -48,10 +50,20 @@ public class ProductTemplate {
                 .sorted(Comparator.comparing(Review::getReviewID))
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        // Check if the user already posted a review to decide if the form needs to edit
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = accountRepo.findByUsername(authentication.getName()).orElseThrow();
+        boolean alreadyReviewed = sortedReviews.stream().anyMatch(review -> review.getAccount().equals(account));
+
+        // Review request set isEdit
+        ReviewRequest reviewRequest = new ReviewRequest();
+        reviewRequest.setIsEdit(alreadyReviewed);
+
         model.addAttribute("product", product);
         model.addAttribute("productName", pName);
         model.addAttribute("reviews", sortedReviews);
-        model.addAttribute("reviewReq", new ReviewRequest());
+        model.addAttribute("alreadyPostedReview", alreadyReviewed);
+        model.addAttribute("reviewReq", reviewRequest);
         return "showProduct";
     }
 

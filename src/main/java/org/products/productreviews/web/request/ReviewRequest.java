@@ -12,6 +12,7 @@ public class ReviewRequest {
 
     private String body;
     private String rating;
+    private boolean isEdit;
 
     /**
      * Creates a {@link Review.Star} from a string value which is either numeric or the number spelt out.
@@ -68,4 +69,13 @@ public class ReviewRequest {
      */
     public void setRating(String rating) {this.rating = rating;}
 
+    /**
+     * Sets if this review is meant to be an edit
+     */
+    public void setIsEdit(boolean isEdit) {this.isEdit = isEdit;}
+
+    /**
+     * @return True if the review is meant to be an edit
+     */
+    public boolean isEdit() {return isEdit;}
 }
