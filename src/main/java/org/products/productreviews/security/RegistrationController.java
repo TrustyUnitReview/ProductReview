@@ -21,6 +21,15 @@ public class RegistrationController {
     private AccountRepository accountRepo;
 
     /**
+     * Display the login page
+     * @return accountLogin view
+     */
+    @GetMapping("/login")
+    public String login() {
+        return "accountLogin";
+    }
+
+    /**
      * Display the registration page
      * @return accountRegistration view
      */
