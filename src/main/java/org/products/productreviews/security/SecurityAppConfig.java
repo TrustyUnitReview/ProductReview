@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Configures security rules for the application
@@ -27,14 +28,22 @@ public class SecurityAppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests //URL authorization
-                        .requestMatchers("/login", "/registration", "/css/registration.css").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/login", "/registration", "/css/registration.css", "/css/login.css")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
                 .formLogin((form) -> form
+                        .loginPage("/login")
+                        .failureUrl("/login?error=true")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()// configures a login form for user authentication
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/login")); //configures logout functionality -> redirects users to /login page on successful output
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) //need this to allow get requests from other pages
+                        .logoutSuccessUrl("/login") //configures logout functionality -> redirects users to /login page on successful output
+                );
 
         return http.build();
     }
