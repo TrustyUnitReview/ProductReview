@@ -22,7 +22,6 @@
       </div>
     </div>
     <div class="navbar-nav me-3 mb-2 mb-lg-0">
-      <a href="/registration" class="nav-link">Registration</a>
       <a href="/logout" class="nav-link">Logout</a>
     </div>
     <a class="navbar-brand" href="/account/own">
@@ -74,7 +73,7 @@
           <img th:if="${product.image == null}" th:src="@{/images/placeholder.jpg}" src="../static/images/placeholder.jpg" class="card-img-bottom mb-2" alt="Placeholder">
           <img th:unless="${product.image == null}" th:src="@{/images/placeholder.jpg}" src="../static/images/placeholder.jpg" class="card-img-bottom mb-2" alt="Placeholder">
           <h5 class="card-title" th:text="|${product.name}|">Product Name</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><span th:utext="${'&#36;' + product.price}"></span></h6>
           <h6 class="card-subtitle mb-2 text-body-secondary"><span th:text="|${product.getCategoryString()}|"></span></h6>
           <!-- Display Average Rating -->
           <p class="card-text">
