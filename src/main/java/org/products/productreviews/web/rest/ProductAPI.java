@@ -6,8 +6,10 @@ import org.products.productreviews.app.entities.Product;
 import org.products.productreviews.app.entities.Review;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.repositories.ProductRepository;
+import org.products.productreviews.app.repositories.ReviewRepository;
 import org.products.productreviews.web.request.ReviewRequest;
 import org.products.productreviews.web.util.WebUtil;
+import org.products.productreviews.web.util.patcher.Patcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,9 +30,9 @@ public class ProductAPI {
     private final ProductRepository productRepo;
     private final AccountRepository accountRepo;
 
-    ProductAPI(ProductRepository productRepository, AccountRepository accountRepo) {
+    ProductAPI(ProductRepository productRepository, AccountRepository accountRepository) {
         productRepo = productRepository;
-        this.accountRepo = accountRepo;
+        accountRepo = accountRepository;
     }
 
     /**
@@ -114,21 +116,24 @@ public class ProductAPI {
 
         Product product = productRepo.findByName(name);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Account> account = accountRepo.findByUsername(authentication.getName());
+        Optional<Account> accountOptional = accountRepo.findByUsername(authentication.getName());
 
-        if (account.isPresent()) {
-            Review review = reviewRequest.toReview(account.get());
-            product.addReview(review);
-            account.get().addReview(review);
-            review.setAccount(account.get());
-            review.setProduct(product);
-
-            productRepo.save(product);
-            accountRepo.save(account.get());
-            return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
-        } else {
+        if (accountOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found").toString();
         }
+
+        Account account =  accountOptional.get();
+
+        Review review = reviewRequest.toReview(account);
+        product.addReview(review);
+        account.addReview(review);
+        review.setAccount(account);
+        review.setProduct(product);
+
+        productRepo.save(product);
+        accountRepo.save(account);
+
+        return WebUtil.getPreviousPageByRequest(request).orElse("/dashboard");
 
     }
 
