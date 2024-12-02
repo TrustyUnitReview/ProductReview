@@ -30,6 +30,15 @@ public class RegistrationController {
     }
 
     /**
+     * Display the logout page
+     * @return accountLogout view
+     */
+    @GetMapping("/logout")
+    public String logout() {
+        return "accountLogOut";
+    }
+
+    /**
      * Display the registration page
      * @return accountRegistration view
      */
