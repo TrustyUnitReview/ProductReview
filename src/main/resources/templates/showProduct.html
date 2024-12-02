@@ -45,6 +45,17 @@
                     <h6 class="card-subtitle mb-2 text-body-secondary">
                         <span th:text="|${product.price}|"></span> <span th:utext="${'&#36;'+'&nbsp;'}"></span>
                     </h6>
+                    <!-- Display Average Rating -->
+                    <p class="card-text">
+                        <strong>Average Rating: </strong>
+                        <span th:if="${product.getRoundedAvgReviewScore() > 0}">
+                          <span th:if="${product.getRoundedAvgReviewScore() == product.getRoundedAvgReviewScore().intValue()}"
+                                th:text="|${product.getRoundedAvgReviewScore().intValue()}/5|">4/5</span>
+                          <span th:unless="${product.getRoundedAvgReviewScore() == product.getRoundedAvgReviewScore().intValue()}"
+                                th:text="|${product.getRoundedAvgReviewScore()}/5|">4.5/5</span>
+                        </span>
+                        <span th:if="${product.getRoundedAvgReviewScore() < 1}">No reviews</span>
+                    </p>
                     <h6 class="card-subtitle mb-2 text-body-secondary">
                         <span th:text="|${product.category}|"></span>
                     </h6>
