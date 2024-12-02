@@ -28,7 +28,7 @@ public class SecurityAppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests //URL authorization
-                        .requestMatchers("/login", "/registration", "/css/registration.css", "/css/login.css")
+                        .requestMatchers("/login", "/registration", "/css/registration.css", "/css/login.css", "/logout", "/css/logout.css")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -41,8 +41,9 @@ public class SecurityAppConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) //need this to allow get requests from other pages
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST")) //need this to allow get requests from other pages
                         .logoutSuccessUrl("/login") //configures logout functionality -> redirects users to /login page on successful output
+                        .permitAll()
                 );
 
         return http.build();
