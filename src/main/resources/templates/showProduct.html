@@ -123,7 +123,7 @@
                         <textarea class="form-control" id="body" rows="5" placeholder="Write down your thoughts" th:field="*{body}" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="formSubmit" th:text="${alreadyPostedReview ? 'Edit' : 'Submit'}"></button>
+                    <button type="submit" class="btn btn-primary" id="formSubmit" th:text="${alreadyPostedReview ? 'Edit Review' : 'Submit'}"></button>
                     <button type="reset" class="btn btn-secondary" id="formReset">Reset</button>
                 </form>
             </div>
