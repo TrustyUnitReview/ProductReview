@@ -19,14 +19,12 @@ public class Patcher {
         Field[] classFields = c.getDeclaredFields();
 
         for (Field field : classFields) {
-            if (!(field.getName().contains("id") || field.getName().contains("ID") || field.getName().contains("Id"))) {
-                field.setAccessible(true);
-                Object value = field.get(incomplete);
-                if (value != null) {
-                    field.set(existing, value);
-                }
-                field.setAccessible(false);
+            field.setAccessible(true);
+            Object value = field.get(incomplete);
+            if (value != null) {
+                field.set(existing, value);
             }
+            field.setAccessible(false);
         }
     }
 }

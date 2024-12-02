@@ -99,8 +99,8 @@
         <!-- Review Forum -->
         <div class="col-6 card fixed-height-card ghostwhite-bg-col">
             <div class="card-body">
-                <h5 class="card-title" th:text="${alreadyPostedReview ? 'Edit your Review for ' : 'Leave a Review for '} + ${productName}"></h5>
-                <form class="m-2" action="#" th:action="@{${alreadyPostedReview ? '/review/' + productName + '/edit' : '/product/' + productName + '/submitReviewByName'}}" method="post" th:object="${reviewReq}" id="mainForm">
+                <h5 class="card-title" th:text="|Leave a Review for ${productName}|"></h5>
+                <form class="m-2" action="#" th:action="@{'/product/' + ${productName} + '/submitReviewByName'}" method="post" th:object="${reviewReq}" id="mainForm">
                     <div class="stars-container">
                         <input class="form-check-input" type="radio" name="star-radio" id="radioStar5" th:field="*{rating}" value="5" th:value="5" required>
                         <label for="radioStar5" class="rating-star">★</label>
