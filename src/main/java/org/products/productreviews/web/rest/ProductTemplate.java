@@ -59,6 +59,7 @@ public class ProductTemplate {
         model.addAttribute("productName", pName);
         model.addAttribute("reviews", sortedReviews);
         model.addAttribute("alreadyPostedReview", alreadyReviewed);
+        model.addAttribute("currentAccount", account);
         model.addAttribute("reviewReq", new ReviewRequest());
         return "showProduct";
     }
