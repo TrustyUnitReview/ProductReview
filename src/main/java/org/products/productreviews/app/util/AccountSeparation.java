@@ -4,6 +4,10 @@ import org.products.productreviews.app.entities.Account;
 
 import java.util.*;
 
+/**
+ * Class AccountSeparation provides a static method to find the degree of separation between two accounts
+ */
+
 public class AccountSeparation {
 
     /**
@@ -14,32 +18,31 @@ public class AccountSeparation {
      */
     public static int getSeparation(Account sourceAccount, Account goalAccount) {
         Set<Account> repeatAccounts = new HashSet<>();
-        Queue<Account> nodeQueue = new ArrayDeque<>();
-        nodeQueue.add(sourceAccount);
+        Queue<Account> accountQueue = new ArrayDeque<>();
+        accountQueue.add(sourceAccount);
 
         Account currentAccount;
         int depth = -1;
-        int count = nodeQueue.size();
+        int count = accountQueue.size();
 
         //BFS algorithm
-        while (!nodeQueue.isEmpty()) {
+        while (!accountQueue.isEmpty()) {
             // Determining depth of graph -> degree of separation between accounts
             if (count == 0) {
                 depth++;
                 if (depth == 3) return depth;
-                count = nodeQueue.size();
+                count = accountQueue.size();
             }
-
-            currentAccount = nodeQueue.remove();
+            currentAccount = accountQueue.remove();
             count--;
 
             if (currentAccount.equals(goalAccount)) return depth;
-
             // Adding all neighbors to the queue except repeat nodes -> the follow list of the current account
             repeatAccounts.add(currentAccount);
-            nodeQueue.addAll(currentAccount.getFollows());
-            nodeQueue.removeAll(repeatAccounts);
+            accountQueue.addAll(currentAccount.getFollows());
+            accountQueue.removeAll(repeatAccounts);
         }
+        // return -1 if no separation is found
         return -1;
     }
 }
