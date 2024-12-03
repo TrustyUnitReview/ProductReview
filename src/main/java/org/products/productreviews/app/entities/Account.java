@@ -3,6 +3,9 @@ package org.products.productreviews.app.entities;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
+import org.products.productreviews.app.util.AccountSeparation;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.management.openmbean.InvalidKeyException;
 import java.util.*;
@@ -166,6 +169,10 @@ public class Account {
      * @param account which is being unfollowed
      */
     public void removeFollows(Account account) {follows.remove(account);}
+
+    public int getSeparation(Account account) {
+        return AccountSeparation.getSeparation(account, this);
+    }
 
     /**
      * Indicates whether some other object is "equal to" this one.
