@@ -170,6 +170,11 @@ public class Account {
      */
     public void removeFollows(Account account) {follows.remove(account);}
 
+    /**
+     * Retrieves the separation between this account and a chosen account
+     * @param account The account to reference separation from
+     * @return integer representing degree of separation
+     */
     public int getSeparation(Account account) {
         return AccountSeparation.getSeparation(account, this);
     }
