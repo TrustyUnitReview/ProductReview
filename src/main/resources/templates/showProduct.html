@@ -91,9 +91,9 @@
                             <a th:text="${review?.account?.username}" th:href="'/account/' + ${review?.account?.username}" class="h6"></a>
                             <small>
                                 <div th:switch="${review.account.getSeparation(currentAccount)}" class="text-muted mb-2">
-                                    <div th:case="1">1 degree</div>
-                                    <div th:case="2">2 degrees</div>
-                                    <div th:case="3">3+ degrees</div>
+                                    <div th:case="1">1st degree</div>
+                                    <div th:case="2">2nd degree</div>
+                                    <div th:case="3">3rd+ degree</div>
                                 </div>
                             </small>
                             <p th:text="${review.body}"></p>

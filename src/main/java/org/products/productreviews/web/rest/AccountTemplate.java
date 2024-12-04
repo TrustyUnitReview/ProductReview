@@ -2,6 +2,7 @@ package org.products.productreviews.web.rest;
 
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
+import org.products.productreviews.app.util.AccountSeparation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -63,11 +64,13 @@ public class AccountTemplate {
         Optional<Account> otherAccount = accountRepo.findByUsername(username);
 
         if (account.isPresent() && otherAccount.isPresent()) {
-            model.addAttribute("account", account.get());
             if (username.equals(account.get().getUsername())) {
                 return "redirect:/account/own";
             }
+            int degree = AccountSeparation.getSeparation(account.get(), otherAccount.get());
 
+            model.addAttribute("degree", degree);
+            model.addAttribute("account", account.get());
             model.addAttribute("otherAccount", otherAccount.get());
             return "otherAccount";
         } else {
