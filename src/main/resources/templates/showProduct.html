@@ -94,10 +94,18 @@
                                 <div th:each="i : ${#numbers.sequence(1, review.rating.getValue())}" class="displayStarFill">★</div>
                             </div>
                         </button>
+
                     </h2>
                     <div th:id="${review.reviewID}" class="accordion-collapse collapse ghostwhite-bg-col" data-bs-parent="#reviewAccordion">
                         <div class="accordion-body text-break">
-                            <a th:text="${review?.account?.username}" th:href="'/account/' + ${review?.account?.username}"></a>
+                            <a th:text="${review?.account?.username}" th:href="'/account/' + ${review?.account?.username}" class="h6"></a>
+                            <small>
+                                <div th:switch="${review.account.getSeparation(currentAccount)}" class="text-muted mb-2">
+                                    <div th:case="1">1st degree</div>
+                                    <div th:case="2">2nd degree</div>
+                                    <div th:case="3">3rd+ degree</div>
+                                </div>
+                            </small>
                             <p th:text="${review.body}"></p>
                         </div>
                     </div>
