@@ -22,7 +22,7 @@ public class AccountSeparation {
         accountQueue.add(sourceAccount);
 
         Account currentAccount;
-        int depth = -1;
+        int depth = 0;
         int count = accountQueue.size();
 
         //BFS algorithm
