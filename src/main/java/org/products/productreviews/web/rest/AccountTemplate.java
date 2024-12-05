@@ -3,8 +3,7 @@ package org.products.productreviews.web.rest;
 import org.products.productreviews.app.entities.Account;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.util.AccountSeparation;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.products.productreviews.app.util.JDistance;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,7 +42,12 @@ public class AccountTemplate {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<Account> account = accountRepo.findByUsername(authentication.getName());
         if (account.isPresent()) {
-            model.addAttribute("account", account.get());
+            JDistance distance = new JDistance();
+            Account selfAccount = account.get();
+            distance.setAccountA(selfAccount);
+
+            model.addAttribute("account", selfAccount);
+            model.addAttribute("JDistance", distance);
             return "selfAccount";
         } else {
             return "redirect:/dashboard";

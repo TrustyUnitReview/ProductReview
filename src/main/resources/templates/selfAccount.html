@@ -55,7 +55,14 @@
             Users Following
             <div class="flex-container">
                 <div class="f-item" th:each="acc: ${account.getFollows()}">
-                    <div class="card-body" th:text="${acc.getUsername()}"></div>
+                    <h1 class="card-title display-4" th:text="${acc.getUsername()}">
+                    </h1>
+                    <div class="card-body">
+                        <!-- Magic, invokes code -->
+                        <th:block th:text="${JDistance.setAccountB(acc)}"></th:block>
+                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted ms-1">
+                        </div>
+                    </div>
                     <a class="fill-div" th:href="${acc.getUsername()}"></a>
                 </div>
             </div>
