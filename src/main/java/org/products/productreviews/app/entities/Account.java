@@ -186,20 +186,12 @@ public class Account {
      * @param account The account to reference separation from
      * @return integer representing degree of separation
      */
-    public int getSeparation(Account account) {
-        return AccountSeparation.getSeparation(account, this);
-    }
-
-    /**
-     * Retrieves the separation between this account and a chosen account
-     * @param account The account to reference separation from
-     * @return integer representing degree of separation
-     */
     public String getSeparationStr(Account account) {
         return switch (AccountSeparation.getSeparation(account, this)) {
+            case 0 -> "No separation";
             case 1 -> "1st Degree";
             case 2 -> "2nd Degree";
-            case 3 -> "3rd Degree";
+            case 3 -> "3rd Degree+";
             default -> "N/A";
         };
     }
