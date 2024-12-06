@@ -118,8 +118,21 @@
                 </div>
             </div>
 
-            <div th:if="${param.sort != null && param.sort[0].equals('Jaccard')}">
-                WIP Jaccard sort
+            <div th:if="${param.sort != null && param.sort[0].equals('Jaccard')}" class="flex-container">
+                <div class="f-item" th:each="acc: ${topJaccardList}">
+                    <h1 class="card-title display-4" th:text="${acc.getUsername()}"></h1>
+                    <div class="card-body">
+                        <!-- Magic, invokes code -->
+                        <th:block th:text="${JDistance.setAccountB(acc)}"></th:block>
+                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Followers: '+ ${acc.followerCount}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Separation: '+ ${acc.getSeparationStr(account)}" class="text-muted ms-1">
+                        </div>
+                    </div>
+                    <a class="fill-div" th:href="${acc.getUsername()}"></a>
+                </div>
             </div>
         </div>
     </div>
