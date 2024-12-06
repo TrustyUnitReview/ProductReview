@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.*;
 import org.products.productreviews.app.repositories.AccountRepository;
 import org.products.productreviews.app.util.AccountSeparation;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.management.openmbean.InvalidKeyException;
 import java.util.*;
@@ -24,6 +22,7 @@ public class Account {
     @OneToMany
     @JoinColumn(name="user_username")
     private Set<Review> reviews;
+    private int followCount;
 
     /**
      * Private constructor for factory use.
@@ -154,6 +153,12 @@ public class Account {
     }
 
     /**
+     * @return Number of users following this user
+     */
+    public int getFollowerCount() {return followCount;}
+
+
+    /**
      * @return Set of users followed
      */
     public Set<Account> getFollows() {return follows;}
@@ -162,13 +167,19 @@ public class Account {
      * Adds a user to follow set
      * @param account which is being followed
      */
-    public void addFollows(Account account) {follows.add(account);}
+    public void addFollows(Account account) {
+        account.followCount++;
+        follows.add(account);
+    }
 
     /**
      * Removes a user from the follow set
      * @param account which is being unfollowed
      */
-    public void removeFollows(Account account) {follows.remove(account);}
+    public void removeFollows(Account account) {
+        account.followCount--;
+        follows.remove(account);
+    }
 
     /**
      * Retrieves the separation between this account and a chosen account
@@ -178,6 +189,21 @@ public class Account {
     public int getSeparation(Account account) {
         return AccountSeparation.getSeparation(account, this);
     }
+
+    /**
+     * Retrieves the separation between this account and a chosen account
+     * @param account The account to reference separation from
+     * @return integer representing degree of separation
+     */
+    public String getSeparationStr(Account account) {
+        return switch (AccountSeparation.getSeparation(account, this)) {
+            case 1 -> "1st Degree";
+            case 2 -> "2nd Degree";
+            case 3 -> "3rd Degree";
+            default -> "N/A";
+        };
+    }
+
 
     /**
      * Indicates whether some other object is "equal to" this one.
