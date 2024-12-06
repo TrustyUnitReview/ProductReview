@@ -35,12 +35,13 @@ git clone https://github.com/TrustyUnitReview/ProductReview
   - [X] Fix tests to work with security configuration
   - [X] Add the ability to follow other users
   - [X] Milestone 2 diagrams and documentation
-- [ ] Milestone 3
-  - [ ] Visual improvements
-  - [ ] Images on the dashboard 
-  - [ ] Allow for users to click directly to a reviewer's profile
-  - [ ] Review filtering
-  - [ ] Review recommendations 
+- [X] Milestone 3
+  - [X] Visual improvements
+  - [X] Allow for users to click directly to a reviewer's profile
+  - [X] Review filtering
+  - [X] Implement Jacquard distance review sorting 
+  - [X] Add degree of separation to profiles
+  - [X] Milestone 3 diagrams and documentation
 
 See the [open issues](https://github.com/TrustyUnitReview/ProductReview/issues) for a full list of known issues.
 
