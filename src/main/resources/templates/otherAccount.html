@@ -56,6 +56,10 @@
                         <input type="submit" class="btn btn-primary btn-block" value="Follow">
                     </form>
                 </div>
+
+                <div class="col-md-10 text-start align-middle">
+                    <div th:text="'Followers: '+ ${otherAccount.followerCount}" class="text-muted ms-1"></div>
+                </div>
             </div>
         </div>
 </div>
