@@ -39,6 +39,8 @@
                 <h1 th:text="|${account.username}|" class="display-4"></h1>
             </div>
 
+            <div th:text="'Followers: '+ ${account.followerCount}" class="text-muted"> </div>
+
             <!-- Could be a good place to put a "logout" button! -->
         </div>
     </div>
@@ -60,8 +62,9 @@
                     <div class="card-body">
                         <!-- Magic, invokes code -->
                         <th:block th:text="${JDistance.setAccountB(acc)}"></th:block>
-                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted ms-1">
+                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted">
                         </div>
+                        <div th:text="'Followers: '+ ${acc.followerCount}" class="text-muted"> </div>
                     </div>
                     <a class="fill-div" th:href="${acc.getUsername()}"></a>
                 </div>
@@ -70,8 +73,70 @@
     </div>
 </div>
 
-<!-- Suggested users would go here -->
-<!-- Similar formatting to above element -->
+<!-- Suggested users -->
+<div class="container w-50 pt-5 px-0 pb-4">
+    <div class="card mx-auto ghostwhite-bg-col">
+        <div th:if="${topFollowList.isEmpty()}" class="review-card">
+            <h1 class="display-6 p-3 m-0">No Users to follow</h1>
+        </div>
+
+        <div th:unless="${topFollowList.isEmpty()}" class="card-header h2 fw-light">
+
+
+            <div class="container-header">
+                Suggested Users
+                <!-- Filter Tags -->
+                <span th:if="${param.sort == null}" class="sort-button mb-2 g-2">
+                    <a href="/account/own?sort=Follows">
+                        <span class="active-sort text-bg-primary badge rounded-pill row-3 sort-button">Most Follows</span></a>
+                    <a href="/account/own?sort=Jaccard">
+                        <span class="inactive-sort text-bg-secondary badge rounded-pill row-3 sort-button">Closest Jaccard</span></a>
+                </span>
+                <span th:unless="${param.sort == null}" class="sort-button mb-2 g-2">
+                    <a href="/account/own?sort=Follows">
+                        <span th:classappend="${param.sort[0].equals('Follows')} ? 'active-sort text-bg-primary' : 'inactive-sort text-bg-secondary'"
+                                                              class="badge rounded-pill row-3 sort-button">Most Follows</span></a>
+                    <a href="/account/own?sort=Jaccard"><span th:classappend="${param.sort[0].equals('Jaccard')} ? 'active-sort text-bg-primary' : 'inactive-sort text-bg-secondary'"
+                                                              class="badge rounded-pill row-3 sort-button">Closest Jaccard</span></a>
+                </span>
+            </div>
+
+            <div th:if="${param.sort == null || param.sort[0].equals('Follows')}" class="flex-container">
+                <div class="f-item" th:each="acc: ${topFollowList}">
+                    <h1 class="card-title display-4" th:text="${acc.getUsername()}"></h1>
+                    <div class="card-body">
+                        <!-- Magic, invokes code -->
+                        <th:block th:text="${JDistance.setAccountB(acc)}"></th:block>
+                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Followers: '+ ${acc.followerCount}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Separation: '+ ${acc.getSeparationStr(account)}" class="text-muted ms-1">
+                        </div>
+                    </div>
+                    <a class="fill-div" th:href="${acc.getUsername()}"></a>
+                </div>
+            </div>
+
+            <div th:if="${param.sort != null && param.sort[0].equals('Jaccard')}" class="flex-container">
+                <div class="f-item" th:each="acc: ${topJaccardList}">
+                    <h1 class="card-title display-4" th:text="${acc.getUsername()}"></h1>
+                    <div class="card-body">
+                        <!-- Magic, invokes code -->
+                        <th:block th:text="${JDistance.setAccountB(acc)}"></th:block>
+                        <div th:text="'Jaccard distance: '+ ${JDistance.distance()}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Followers: '+ ${acc.followerCount}" class="text-muted ms-1">
+                        </div>
+                        <div th:text="'Separation: '+ ${acc.getSeparationStr(account)}" class="text-muted ms-1">
+                        </div>
+                    </div>
+                    <a class="fill-div" th:href="${acc.getUsername()}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--Reviews-->
 <div class="container w-50 pt-5 px-0 pb-4">

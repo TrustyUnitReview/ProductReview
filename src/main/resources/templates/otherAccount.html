@@ -39,11 +39,7 @@
 
                 <div class="col-md-10 text-start align-middle">
                     <h1 th:text="|${otherAccount.username}|" class="display-4 mb-0"></h1>
-                        <div th:switch="${degree}" class="text-muted ms-1">
-                            <div th:case="1">1st degree</div>
-                            <div th:case="2">2nd degree</div>
-                            <div th:case="3">3rd+ degree</div>
-                        </div>
+                        <div th:text="${otherAccount.getSeparationStr(account)}" class="text-muted ms-1"></div>
                 </div>
 
                 <div  class="col-md-2 my-auto text-end" th:if="${account.follows.contains(otherAccount)}">
@@ -55,6 +51,10 @@
                     <form action="#" th:action="@{/account/{username}/follow(username=${otherAccount.username})}" method="post">
                         <input type="submit" class="btn btn-primary btn-block" value="Follow">
                     </form>
+                </div>
+
+                <div class="col-md-10 text-start align-middle">
+                    <div th:text="'Followers: '+ ${otherAccount.followerCount}" class="text-muted ms-1"></div>
                 </div>
             </div>
         </div>

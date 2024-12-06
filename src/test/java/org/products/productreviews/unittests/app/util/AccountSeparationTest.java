@@ -47,6 +47,7 @@ public class AccountSeparationTest {
     @Test
     public void testSameAccountSeparation() {
         assertEquals(-1, AccountSeparation.getSeparation(activeAccount, activeAccount));
+        assertEquals("N/A", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -57,6 +58,7 @@ public class AccountSeparationTest {
         activeAccount.addFollows(goalAccount);
 
         assertEquals(0, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("No separation", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -68,6 +70,7 @@ public class AccountSeparationTest {
         directAccount.addFollows(goalAccount);
 
         assertEquals(1, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("1st Degree", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -80,6 +83,7 @@ public class AccountSeparationTest {
         secondLinkAccount.addFollows(goalAccount);
 
         assertEquals(2, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("2nd Degree", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -93,6 +97,7 @@ public class AccountSeparationTest {
         thirdLinkAccount.addFollows(goalAccount);
 
         assertEquals(3, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("3rd Degree+", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -107,6 +112,7 @@ public class AccountSeparationTest {
         fourthLinkAccount.addFollows(goalAccount);
 
         assertEquals(3, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("3rd Degree+", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -121,6 +127,7 @@ public class AccountSeparationTest {
         thirdLinkAccount.addFollows(goalAccount);
 
         assertEquals(3, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("3rd Degree+", goalAccount.getSeparationStr(activeAccount));
     }
 
     /**
@@ -139,5 +146,6 @@ public class AccountSeparationTest {
         fourthLinkAccount.addFollows(goalAccount);
 
         assertEquals(2, AccountSeparation.getSeparation(activeAccount, goalAccount));
+        assertEquals("2nd Degree", goalAccount.getSeparationStr(activeAccount));
     }
 }

@@ -5,6 +5,17 @@ body *, body *:before, body *:after { box-sizing: inherit; }
     max-width: 90%;
     margin: auto;
 }
+.container-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.active-sort:hover {
+    background-color: #0056b3 !important;
+}
+.inactive-sort:hover {
+    background-color: #5c5c5c !important;
+}
 
 .flex-container {
     display: flex;
