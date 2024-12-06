@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,6 +35,24 @@ public class AccountTemplate {
     }
 
     /**
+     * Get top 5 followed accounts in the system
+     */
+    private List<Account> getTop5Followed(Account ownAccount) {
+        List<Account> allAccounts = new ArrayList<>();
+        // I'm sure there's a way to do it in one lambda, but it'll be more readable by splitting the steps
+        accountRepo.findAll().forEach(allAccounts::add);
+        // Exclude yourself, and any follows from list
+        allAccounts.remove(ownAccount);
+        ownAccount.getFollows().forEach(allAccounts::remove);
+        // Sort by following amount -> we want decreasing order
+        allAccounts.sort(Comparator.comparingInt(Account::getFollowerCount).reversed());
+
+        // Up to five followed
+        int listSize = Math.min(allAccounts.size(), 5);
+        return allAccounts.subList(0, listSize);
+    }
+
+    /**
      * Serves the current user's page
      *
      * @param model Model
@@ -48,6 +69,7 @@ public class AccountTemplate {
 
             model.addAttribute("account", selfAccount);
             model.addAttribute("JDistance", distance);
+            model.addAttribute("topFollowList", getTop5Followed(selfAccount));
             return "selfAccount";
         } else {
             return "redirect:/dashboard";
